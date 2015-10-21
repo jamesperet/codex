@@ -1,0 +1,26 @@
+{
+  "name": "codex",
+  "version": "0.0.1",
+  "authors": [
+    "James Peret <james.peret@gmail.com>"
+  ],
+  "description": "Note taking app",
+  "main": "index.html",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "homepage": "james.peret@gmail.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-ui": "~0.4.0",
+    "angular-ui-router": "~0.2.15"
+  }
+}
