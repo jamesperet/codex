@@ -8,8 +8,9 @@
  * Controller of the domainManagerApp
  */
 angular.module('codexApp.index', [])
-  .controller('AppCtrl',['$scope', '$rootScope', function ($scope,  $rootScope) {
+  .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', 'FileService', function ($scope,  $rootScope, $state, $location, FileService) {
 
+    $scope.files = FileService.getNotes();
 
 
     var remote = require('remote')
@@ -58,72 +59,32 @@ angular.module('codexApp.index', [])
       return false;
     };
 
-    var marked = require('marked');
-    console.log(marked('I am using __markdown__.'));
 
 
-    $scope.prettySize = function(bytes) {
-      if (bytes <= 1024) {
-        return bytes + " KB"
-      } else {
-        var megabytes = parseFloat(Math.round(bytes/1024 * 100) / 100).toFixed(0);
-        return megabytes + " MB"
-      }
+
+
+    $scope.openNote = function(note){
+      //console.log($location.path());
+      console.log("openning note " + note.title + " (" + note.id + ")");
+      FileService.setCurrentNote(note)
+      $state.go("note");
+      //$location.path('/notes/' + 'test1')
+      //console.log($location.path());
     }
 
-    $scope.getFilePathExtension = function(path) {
-    	var filename = path.split('\\').pop().split('/').pop();
-    	var lastIndex = filename.lastIndexOf(".");
-    	if (lastIndex < 1) return "";
-    	return filename.substr(lastIndex + 1);
-    }
+    $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
+        console.log(unfoundState.to); // "lazy.state"
+        console.log(unfoundState.toParams); // {a:1, b:2}
+        console.log(unfoundState.options); // {inherit:false} + default options
+    })
 
-    $scope.getFileType = function(path) {
-      var extension = $scope.getFilePathExtension(path);
-      console.log(extension)
-      switch (extension) {
-        case "pdf":
-          return "Document";
-        case "jpg":
-          return "Image";
-        case "png":
-          return "Image";
-        case "md":
-          return "Markdown";
-        default:
-          return "File";
-      }
-    }
-
-    var _getAllFilesFromFolder = function(dir) {
-      var filesystem = require("fs");
-      var results = [];
-      filesystem.readdirSync(dir).forEach(function(file) {
-
-          file_path = dir+'/'+file;
-          var stat = filesystem.statSync(file_path);
-          if (stat && stat.isDirectory()) {
-              results = results.concat(_getAllFilesFromFolder(file_path))
-          } else {
-            var file_obj = {
-              name: file,
-              path: file_path,
-              size: $scope.prettySize(stat["size"]),
-              type: $scope.getFileType(file_path),
-              created_at: dateFormat(stat["birthdate"], "mediumDate"),
-              modified_at: dateFormat(stat["mtime"], "mediumDate"),
-              accessed_at: dateFormat(stat["atime"], "mediumDate")
-            }
-            results.push(file_obj);
-          }
-
-          console.log(file_obj);
-      });
-      return results;
-    };
-
-    //console.log(_getAllFilesFromFolder("/Users/james/dev/codex/codex"));
-    $scope.files = _getAllFilesFromFolder("/Users/james/dev/codex/codex");
-
+    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
+      console.log('Change state error'); // "lazy.state"
+      console.log(error)
+      console.log(toState)
+      console.log(toParams)
+      console.log(fromState)
+      console.log(fromParams)
+    })
 
   }]);

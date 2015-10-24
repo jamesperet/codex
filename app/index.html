@@ -1,24 +1,61 @@
 <!DOCTYPE html>
 <html  class="no-js">
   <head>
-    <title>Photon</title>
+    <title>Codex</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../css/photon.min.css">
+    <link rel="stylesheet" href="../css/codex.css">
 
     <!-- Javascript -->
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
 
     <script src="scripts/codex-app.js"></script>
     <script src="scripts/app-ctrl.js"></script>
-    <script src="../js/menu.js" charset="utf-8"></script>
-    <script src="../js/test.js" charset="utf-8"></script>
+    <script src="scripts/sidebar-ctrl.js"></script>
+    <script src="scripts/note-ctrl.js"></script>
+    <script src="scripts/services/file-service.js"></script>
     <script src="scripts/date-formatter.js" charset="utf-8"></script>
   </head>
   <body ng-app="codexApp">
+    <div  class="window">
 
-      <div ui-view></div>
+    <header class="toolbar toolbar-header">
+      <h1 class="title">Codex</h1>
+    </header>
 
+
+    <!-- Your app's content goes inside .window-content -->
+    <div class="window-content" id="holder">
+      <div class="pane-group">
+        <div class="pane pane-sm sidebar" ng-controller="SidebarCtrl">
+          <nav class="nav-group">
+            <h5 class="nav-group-title">My Notes</h5>
+            <span class="nav-group-item active" ui-sref="index">
+              <span class="icon icon-archive"></span>
+              All Notes
+            </span>
+            <span class="nav-group-item">
+              <span class="icon icon-book"></span>
+              Notebooks
+            </span>
+            <h5 class="nav-group-title">Favorites</h5>
+            <span class="nav-group-item">
+              <span class="icon icon-star"></span>
+              Starred
+            </span>
+          </nav>
+        </div>
+        <div class="pane" ui-view ></div>
+      </div>
+    </div>
+
+    <footer class="toolbar toolbar-footer">
+      <h1 class="title" ng-bind="noteCount()"></h1>
+    </footer>
+
+    </div>
   </body>
 </html>

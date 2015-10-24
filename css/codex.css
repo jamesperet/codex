@@ -1,0 +1,18 @@
+.pane {
+  height: 100%;
+}
+
+.note-container {
+  background-color: #F6F6F6;
+  padding-top: 5px;
+  height: 100%;
+  overflow-y: overlay;
+}
+
+.note-container .note {
+  padding: 20px;
+  padding-top: 15px;
+  border-radius: 10px;
+  background-color: white;
+  margin: 25px;
+}

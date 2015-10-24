@@ -10,7 +10,10 @@
 angular
   .module('codexApp', [
     'ui.router',
-    'codexApp.index'
+    'ngSanitize',
+    'codexApp.index',
+    'codexApp.sidebar',
+    'codexApp.note'
   ])
 
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -23,13 +26,25 @@ angular
 
     // UI router
     // For any unmatched url, redirect to /state1
-    $urlRouterProvider.otherwise("/");
+
     $stateProvider
     .state('index', {
       url: "/",
       templateUrl: 'views/index.html',
       controller: 'AppCtrl'
     })
+    .state('note', {
+      url: "/notes",
+      templateUrl: "views/note.html",
+      controller: 'NoteCtrl',
+      resolve: {
+        pageData: function($stateParams) {
+          console.log('resolve ok')
+          return 'resolve ok';
+        },
+      }
+    })
+    $urlRouterProvider.otherwise("/");
 
 
   }]);

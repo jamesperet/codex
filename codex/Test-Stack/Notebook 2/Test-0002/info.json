@@ -1,5 +1,7 @@
 {
-  "title" : "Test #0002",
+  "title"     : "Test #0002",
   "note_type" : "markdown",
-  "author" : "James Peret"
+  "id"        : "000002",
+  "author"    : "James Peret",
+  "index"     : "index.md"
 }
