@@ -12,7 +12,7 @@ angular.module('codexApp.note', [])
 
     var marked = require('marked');
     var filesystem = require("fs");
-    
+
     console.log('Note opened!')
 
     $scope.note = FileService.getCurrentNote();
@@ -30,6 +30,22 @@ angular.module('codexApp.note', [])
           $scope.note.data = marked(str);
       }
       //console.log($scope.note);
+      var a = document.getElementsByTagName('a'), ajax;
+      for (var i=0; i<a.length; ++i) {
+         a[i].addEventListener('click', handleAnchor, false);
+      }
+      function handleAnchor(e){
+          e.preventDefault();
+          if(ajax) ajax.abort();
+          ajax = new XMLHttpRequest();
+          ajax.onload = updateContent;
+          ajax.open("get", this.href, true);
+          ajax.send();
+          console.log("-> Prevented link from opening: " + e.srcElement.href);
+      }
+      function updateContent() {
+          // Do something with `this.responseText`
+      }
     });
 
   }]);

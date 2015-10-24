@@ -47,7 +47,10 @@ angular.module('codexApp')
         if (stat && stat.isDirectory()) {
             results = results.concat(directorySize(file_path))
         } else {
+          if(file != ".DS_Store") {
             size = size + stat["size"];
+            console.log("* " + stat["size"] + " KB -> " + file_path)
+          }
         }
     });
     return size;
