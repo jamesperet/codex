@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html  class="no-js">
+
   <head>
     <title>Codex</title>
 
@@ -13,48 +14,63 @@
     <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
 
     <script src="scripts/codex-app.js"></script>
-    <script src="scripts/app-ctrl.js"></script>
-    <script src="scripts/sidebar-ctrl.js"></script>
-    <script src="scripts/note-ctrl.js"></script>
+    <script src="scripts/controllers/app-ctrl.js"></script>
+    <script src="scripts/controllers/header-ctrl.js"></script>
+    <script src="scripts/controllers/sidebar-ctrl.js"></script>
+    <script src="scripts/controllers/note-ctrl.js"></script>
     <script src="scripts/services/file-service.js"></script>
-    <script src="scripts/date-formatter.js" charset="utf-8"></script>
+    <script src="scripts/services/date-formatter.js" charset="utf-8"></script>
   </head>
+
   <body ng-app="codexApp">
     <div  class="window">
 
-    <header class="toolbar toolbar-header">
-      <h1 class="title">Codex</h1>
-    </header>
-
-
-    <!-- Your app's content goes inside .window-content -->
-    <div class="window-content" id="holder">
-      <div class="pane-group">
-        <div class="pane pane-sm sidebar" ng-controller="SidebarCtrl">
-          <nav class="nav-group">
-            <h5 class="nav-group-title">My Notes</h5>
-            <span class="nav-group-item active" ui-sref="index">
-              <span class="icon icon-archive"></span>
-              All Notes
-            </span>
-            <span class="nav-group-item">
-              <span class="icon icon-book"></span>
-              Notebooks
-            </span>
-            <h5 class="nav-group-title">Favorites</h5>
-            <span class="nav-group-item">
-              <span class="icon icon-star"></span>
-              Starred
-            </span>
-          </nav>
+      <header class="toolbar toolbar-header" ng-controller="HeaderCtrl">
+        <h1 class="title">Codex</h1>
+        <div class="toolbar-actions">
+          <button class="btn btn-default">
+            <span class="icon icon-plus"></span>
+          </button>
+          <div class="btn-group pull-right">
+            <button class="btn btn-default">
+              <span class="icon icon-pencil"></span>
+            </button>
+            <button class="btn btn-default active">
+              <span class="icon icon-eye"></span>
+            </button>
+          </div>
         </div>
-        <div class="pane" ui-view ></div>
-      </div>
-    </div>
+      </header>
 
-    <footer class="toolbar toolbar-footer">
-      <h1 class="title" ng-bind="noteCount()"></h1>
-    </footer>
+
+      <!-- Your app's content goes inside .window-content -->
+      <div class="window-content" id="holder">
+        <div class="pane-group">
+          <div class="pane pane-sm sidebar" ng-controller="SidebarCtrl">
+            <nav class="nav-group">
+              <h5 class="nav-group-title">My Notes</h5>
+              <span class="nav-group-item active" ui-sref="index">
+                <span class="icon icon-archive"></span>
+                All Notes
+              </span>
+              <span class="nav-group-item">
+                <span class="icon icon-book"></span>
+                Notebooks
+              </span>
+              <h5 class="nav-group-title">Favorites</h5>
+              <span class="nav-group-item">
+                <span class="icon icon-star"></span>
+                Starred
+              </span>
+            </nav>
+          </div>
+          <div class="pane" ui-view ></div>
+        </div>
+      </div>
+
+      <footer class="toolbar toolbar-footer">
+        <h1 class="title" ng-bind="noteCount()"></h1>
+      </footer>
 
     </div>
   </body>

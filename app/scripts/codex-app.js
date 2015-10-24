@@ -12,6 +12,7 @@ angular
     'ui.router',
     'ngSanitize',
     'codexApp.index',
+    'codexApp.header',
     'codexApp.sidebar',
     'codexApp.note'
   ])
