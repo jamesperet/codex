@@ -9,15 +9,18 @@
     <link rel="stylesheet" href="../css/codex.css">
 
     <!-- Javascript -->
+    <script src="../bower_components/ace-builds/src-min-noconflict/ace.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../bower_components/angular-ui-ace/ui-ace.js"></script>
 
     <script src="scripts/codex-app.js"></script>
     <script src="scripts/controllers/app-ctrl.js"></script>
     <script src="scripts/controllers/header-ctrl.js"></script>
     <script src="scripts/controllers/sidebar-ctrl.js"></script>
-    <script src="scripts/controllers/note-ctrl.js"></script>
+    <script src="scripts/controllers/note-view-ctrl.js"></script>
+    <script src="scripts/controllers/note-edit-ctrl.js"></script>
     <script src="scripts/services/file-service.js"></script>
     <script src="scripts/services/date-formatter.js" charset="utf-8"></script>
   </head>
@@ -32,10 +35,10 @@
             <span class="icon icon-plus"></span>
           </button>
           <div class="btn-group pull-right">
-            <button class="btn btn-default">
+            <button class="btn btn-default" ng-class="noteEditBtnClass" ng-click="activateNoteEdit()">
               <span class="icon icon-pencil"></span>
             </button>
-            <button class="btn btn-default active">
+            <button class="btn btn-default" ng-class="noteViewBtnClass" ng-click="activateNoteView()">
               <span class="icon icon-eye"></span>
             </button>
           </div>
@@ -49,7 +52,7 @@
           <div class="pane pane-sm sidebar" ng-controller="SidebarCtrl">
             <nav class="nav-group">
               <h5 class="nav-group-title">My Notes</h5>
-              <span class="nav-group-item active" ui-sref="index">
+              <span class="nav-group-item active" ng-click="goToAllNotes()">
                 <span class="icon icon-archive"></span>
                 All Notes
               </span>

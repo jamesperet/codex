@@ -11,10 +11,12 @@ angular
   .module('codexApp', [
     'ui.router',
     'ngSanitize',
+    'ui.ace',
     'codexApp.index',
     'codexApp.header',
     'codexApp.sidebar',
-    'codexApp.note'
+    'codexApp.noteView',
+    'codexApp.noteEdit'
   ])
 
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -34,10 +36,21 @@ angular
       templateUrl: 'views/index.html',
       controller: 'AppCtrl'
     })
-    .state('note', {
+    .state('note-view', {
       url: "/notes",
-      templateUrl: "views/note.html",
-      controller: 'NoteCtrl',
+      templateUrl: "views/note-view.html",
+      controller: 'NoteViewCtrl',
+      resolve: {
+        pageData: function($stateParams) {
+          console.log('resolve ok')
+          return 'resolve ok';
+        },
+      }
+    })
+    .state('note-edit', {
+      url: "/notes",
+      templateUrl: "views/note-edit.html",
+      controller: 'NoteEditCtrl',
       resolve: {
         pageData: function($stateParams) {
           console.log('resolve ok')

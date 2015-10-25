@@ -67,7 +67,8 @@ angular.module('codexApp.index', [])
       //console.log($location.path());
       console.log("openning note " + note.title + " (" + note.id + ")");
       FileService.setCurrentNote(note)
-      $state.go("note");
+      $rootScope.$broadcast('main-window:note-view');
+      $state.go("note-view");
       //$location.path('/notes/' + 'test1')
       //console.log($location.path());
     }

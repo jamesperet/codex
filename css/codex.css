@@ -16,3 +16,14 @@
   background-color: white;
   margin: 25px;
 }
+
+.ace_editor { height: 100%; }
+
+.editor-container {
+  background-color: #F6F6F6;
+  padding-top: 0px;
+  height: 100%;
+  overflow-y: overlay;
+}
+
+.ace_content { cursor: text; }

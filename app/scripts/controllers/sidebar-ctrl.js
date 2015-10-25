@@ -12,4 +12,9 @@ angular.module('codexApp.sidebar', [])
 
     console.log('Sidebar loaded')
 
+    $scope.goToAllNotes = function() {
+      $rootScope.$broadcast('main-window:note-list');
+      $state.go("index");
+    }
+
   }]);
