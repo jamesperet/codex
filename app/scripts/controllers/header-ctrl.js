@@ -8,15 +8,32 @@
  * Controller of the domainManagerApp
  */
 angular.module('codexApp.header', [])
-  .controller('HeaderCtrl',['$scope', '$rootScope', '$state', function ($scope,  $rootScope, $state) {
+  .controller('HeaderCtrl',['$scope', '$rootScope', '$state', 'FileService', function ($scope,  $rootScope, $state, FileService) {
 
-    console.log('Header loaded')
+    console.log('-> Header loaded')
 
     $scope.noteViewBtnClass = "";
     $scope.noteEditBtnClass = "";
 
+    // Create New Note
+
+    $scope.createNewNote = function() {
+      dialog.showSaveDialog({ defaultPath: FileService.getDefaultNotesDir(), filters: [ { name: 'markdown', extensions: ['md'] }] }, function (fileName) {
+        var fs = require('fs');
+        if (fileName === undefined) return;
+        fs.writeFile(fileName, "", function (err) {
+          console.log("-> CREATE NEW NOTE: " + fileName)
+          var note = FileService.getNote(fileName);
+          FileService.setCurrentNote(note)
+          console.log(note)
+          $scope.activateNoteEdit();
+        });
+      });
+    }
+
+    // Note View active button
+
     $scope.activateNoteView = function() {
-      $rootScope.$broadcast('activate-note-view');
       $rootScope.$broadcast('window-view:change');
       $state.go("note-view");
       $scope.noteViewBtnClass = "active";
@@ -24,7 +41,6 @@ angular.module('codexApp.header', [])
     }
 
     $scope.activateNoteEdit = function() {
-      $rootScope.$broadcast('activate-note-edit');
       $rootScope.$broadcast('window-view:change');
       $state.go("note-edit");
       $scope.noteViewBtnClass = "";
@@ -41,7 +57,6 @@ angular.module('codexApp.header', [])
         $scope.noteViewBtnClass = "";
         $scope.noteEditBtnClass = "";
       }
-      //console.log($scope.raw_data);
     });
 
     $rootScope.$on('main-window:note-view', function() {
@@ -54,7 +69,6 @@ angular.module('codexApp.header', [])
         $scope.noteViewBtnClass = "active";
         $scope.noteEditBtnClass = "";
       }
-      //console.log($scope.raw_data);
     });
 
   }]);

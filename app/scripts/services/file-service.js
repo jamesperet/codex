@@ -2,6 +2,7 @@ angular.module('codexApp')
 .service('FileService', [ '$rootScope', '$http',  function($rootScope, $http) {
 
   var notes_dir = "/Users/james/dev/codex/codex";
+  var default_notes_dir = "/Users/james/dev/codex/codex/inbox";
   var notes = [];
   var current_note = "";
 
@@ -49,7 +50,7 @@ angular.module('codexApp')
         } else {
           if(file != ".DS_Store") {
             size = size + stat["size"];
-            console.log("* " + stat["size"] + " KB -> " + file_path)
+            //console.log("* " + stat["size"] + " KB -> " + file_path)
           }
         }
     });
@@ -170,6 +171,24 @@ angular.module('codexApp')
     });
   }
 
+  this.getNote = function(file_path){
+    var filesystem = require("fs");
+    var stat = filesystem.statSync(file_path);
+    var file_obj = {
+      title: "",
+      path: file_path,
+      size: stat['size'],
+      type: getFileType(file_path),
+      author: "",
+      index: "",
+      id: "",
+      created_at: dateFormat(stat["birthdate"], "mediumDate"),
+      modified_at: dateFormat(stat["mtime"], "mediumDate"),
+      accessed_at: dateFormat(stat["atime"], "mediumDate")
+    }
+    return file_obj
+  }
+
 
   // RESPONSE
   this.getNotes = function() {
@@ -185,7 +204,11 @@ angular.module('codexApp')
     //console.log("searcing for: " + note_id)
     current_note = note;
     //console.log(current_note);
-    console.log("Current_note: " + current_note.title)
+    //console.log("Current_note: " + current_note.title)
+  }
+
+  this.getDefaultNotesDir = function() {
+    return default_notes_dir;
   }
 
 }])

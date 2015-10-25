@@ -13,7 +13,7 @@ angular.module('codexApp.noteView', [])
     var marked = require('marked');
     var filesystem = require("fs");
 
-    console.log('Note opened!')
+    console.log('-> Note View opened!')
 
     $scope.note = FileService.getCurrentNote();
     $scope.container = "note-container";
@@ -51,32 +51,14 @@ angular.module('codexApp.noteView', [])
     });
 
     $scope.marked = function(str) {
-      return marked(str);
+      if(str != "" && str != undefined) {
+        return marked(str);
+      } else {
+        return str;
+      }
+
     }
 
-    $rootScope.$on('activate-note-view', function() {
-      if(!$scope.$$phase) {
-        $scope.$apply(function(){
-          $scope.showNoteView = true;
-          $scope.showNoteEdit = false;
-        });
-      } else {
-        $scope.showNoteView = true;
-        $scope.showNoteEdit = false;
-      }
-    });
 
-    $rootScope.$on('activate-note-edit', function() {
-      if(!$scope.$$phase) {
-        $scope.$apply(function(){
-          $scope.showNoteView = false;
-          $scope.showNoteEdit = true;
-        });
-      } else {
-        $scope.showNoteView = false;
-        $scope.showNoteEdit = true;
-      }
-      //console.log($scope.raw_data);
-    });
 
   }]);

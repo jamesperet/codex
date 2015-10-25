@@ -37,26 +37,20 @@ angular
       controller: 'AppCtrl'
     })
     .state('note-view', {
-      url: "/notes",
+      url: "/note-view",
       templateUrl: "views/note-view.html",
       controller: 'NoteViewCtrl',
       resolve: {
         pageData: function($stateParams) {
-          console.log('resolve ok')
+          //console.log('resolve ok')
           return 'resolve ok';
         },
       }
     })
     .state('note-edit', {
-      url: "/notes",
+      url: "/note-edit",
       templateUrl: "views/note-edit.html",
-      controller: 'NoteEditCtrl',
-      resolve: {
-        pageData: function($stateParams) {
-          console.log('resolve ok')
-          return 'resolve ok';
-        },
-      }
+      controller: 'NoteEditCtrl'
     })
     $urlRouterProvider.otherwise("/");
 

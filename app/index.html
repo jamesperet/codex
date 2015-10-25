@@ -23,6 +23,11 @@
     <script src="scripts/controllers/note-edit-ctrl.js"></script>
     <script src="scripts/services/file-service.js"></script>
     <script src="scripts/services/date-formatter.js" charset="utf-8"></script>
+
+    <script>
+     var remote = require('remote'); 
+     var dialog = remote.require('dialog');
+    </script>
   </head>
 
   <body ng-app="codexApp">
@@ -31,7 +36,7 @@
       <header class="toolbar toolbar-header" ng-controller="HeaderCtrl">
         <h1 class="title">Codex</h1>
         <div class="toolbar-actions">
-          <button class="btn btn-default">
+          <button class="btn btn-default" ng-click="createNewNote()">
             <span class="icon icon-plus"></span>
           </button>
           <div class="btn-group pull-right">

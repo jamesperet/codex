@@ -10,7 +10,7 @@
 angular.module('codexApp.sidebar', [])
   .controller('SidebarCtrl',['$scope', '$rootScope', '$state', function ($scope,  $rootScope, $state) {
 
-    console.log('Sidebar loaded')
+    console.log('-> Sidebar loaded')
 
     $scope.goToAllNotes = function() {
       $rootScope.$broadcast('main-window:note-list');
