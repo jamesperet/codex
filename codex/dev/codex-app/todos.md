@@ -1,6 +1,10 @@
 # Codex Todo List
 
-* [ ] Download and install [photon](http://photonkit.com/components/)
-* [ ] Install AngularJS
-* [ ] Install JS Markdown converter (Redcarpet?)
-* [ ] Read files from disk
+* [X] Download and install [photon](http://photonkit.com/components/)
+* [X] Install AngularJS
+* [X] Install JS Markdown converter (Redcarpet?)
+* [X] Read files from disk
+* [X] Ace Editor
+* [X] Edit and save files
+* [X] Create new files
+* [X] Internal links
