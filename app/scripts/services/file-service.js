@@ -159,6 +159,17 @@ angular.module('codexApp')
     return results[0];
   };
 
+  this.saveFile = function(file_path, content){
+    var fs = require('fs');
+    fs.writeFile(file_path, content, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+
+        console.log("-> FILE SAVED: " + file_path);
+    });
+  }
+
 
   // RESPONSE
   this.getNotes = function() {

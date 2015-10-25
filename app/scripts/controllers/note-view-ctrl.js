@@ -79,13 +79,4 @@ angular.module('codexApp.noteView', [])
       //console.log($scope.raw_data);
     });
 
-    $scope.aceLoaded = function(_editor) {
-       _editor.setReadOnly(false);
-      console.log($scope.raw_data);
-    };
-
-    $scope.aceChanged = function(e) {
-      console.log("-> Note data changed.");
-    };
-
   }]);

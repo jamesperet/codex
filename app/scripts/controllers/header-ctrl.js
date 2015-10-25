@@ -17,6 +17,7 @@ angular.module('codexApp.header', [])
 
     $scope.activateNoteView = function() {
       $rootScope.$broadcast('activate-note-view');
+      $rootScope.$broadcast('window-view:change');
       $state.go("note-view");
       $scope.noteViewBtnClass = "active";
       $scope.noteEditBtnClass = "";
@@ -24,6 +25,7 @@ angular.module('codexApp.header', [])
 
     $scope.activateNoteEdit = function() {
       $rootScope.$broadcast('activate-note-edit');
+      $rootScope.$broadcast('window-view:change');
       $state.go("note-edit");
       $scope.noteViewBtnClass = "";
       $scope.noteEditBtnClass = "active";

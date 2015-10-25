@@ -14,6 +14,7 @@ angular.module('codexApp.sidebar', [])
 
     $scope.goToAllNotes = function() {
       $rootScope.$broadcast('main-window:note-list');
+      $rootScope.$broadcast('window-view:change');
       $state.go("index");
     }
 

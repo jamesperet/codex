@@ -20,6 +20,7 @@ angular.module('codexApp.noteEdit', [])
     $scope.raw_data = "";
     $scope.showNoteView = true;
     $scope.showNoteEdit = false;
+    $scope.savedBeforeQuit = false;
 
 
     filesystem.readFile($scope.note.path, function(err, data) {
@@ -56,30 +57,14 @@ angular.module('codexApp.noteEdit', [])
       return marked(str);
     }
 
-    $rootScope.$on('activate-note-view', function() {
-      if(!$scope.$$phase) {
-        $scope.$apply(function(){
-          $scope.showNoteView = true;
-          $scope.showNoteEdit = false;
-        });
-      } else {
-        $scope.showNoteView = true;
-        $scope.showNoteEdit = false;
+    $rootScope.$on('window-view:change', function() {
+      if($scope.savedBeforeQuit == false) {
+        $scope.savedBeforeQuit = true;
+        FileService.saveFile($scope.note.path, $scope.raw_data)
       }
+
     });
 
-    $rootScope.$on('activate-note-edit', function() {
-      if(!$scope.$$phase) {
-        $scope.$apply(function(){
-          $scope.showNoteView = false;
-          $scope.showNoteEdit = true;
-        });
-      } else {
-        $scope.showNoteView = false;
-        $scope.showNoteEdit = true;
-      }
-      //console.log($scope.raw_data);
-    });
 
     $scope.aceLoaded = function(_editor) {
        _editor.setReadOnly(false);
