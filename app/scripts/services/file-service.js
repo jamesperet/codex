@@ -207,6 +207,10 @@ angular.module('codexApp')
     //console.log("Current_note: " + current_note.title)
   }
 
+  this.getNotesDir = function() {
+    return notes_dir;
+  }
+
   this.getDefaultNotesDir = function() {
     return default_notes_dir;
   }
