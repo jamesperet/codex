@@ -3,6 +3,7 @@ angular.module('codexApp')
 
   var notes_dir = "/Users/james/dev/codex/codex";
   var default_notes_dir = "/Users/james/dev/codex/codex/inbox";
+  var default_home_note = "/Users/james/dev/codex/codex/index.md"
   var notes = [];
   var current_note = "";
 
@@ -171,7 +172,7 @@ angular.module('codexApp')
     });
   }
 
-  this.getNote = function(file_path){
+  var getNote = function(file_path){
     var filesystem = require("fs");
     var stat = filesystem.statSync(file_path);
     var file_obj = {
@@ -196,6 +197,10 @@ angular.module('codexApp')
     return getAllFilesFromFolder();
   }
 
+  this.getNote = function(path) {
+    return getNote(path);
+  }
+
   this.getCurrentNote = function() {
     return current_note;
   }
@@ -213,6 +218,10 @@ angular.module('codexApp')
 
   this.getDefaultNotesDir = function() {
     return default_notes_dir;
+  }
+
+  this.getDefaultNote = function() {
+    return getNote(default_home_note);
   }
 
 }])

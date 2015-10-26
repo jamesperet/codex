@@ -64,7 +64,7 @@ angular.module('codexApp.noteView', [])
               FileService.setCurrentNote(note);
               $scope.note = note;
               console.log("-> Opening Link: " + note.path)
-              $scope.loadNoteView()
+              $scope.loadNoteView();
             }
 
 
@@ -76,6 +76,12 @@ angular.module('codexApp.noteView', [])
     }
 
     $scope.loadNoteView();
+
+    $rootScope.$on('note-view:reload', function() {
+      $scope.note = FileService.getCurrentNote();
+      $scope.html_data = "";
+      $scope.loadNoteView();
+    });
 
     $scope.fixImgURLs = function(current_note_path, html){
       // var images = html.getElementsByTagName('img');

@@ -37,6 +37,14 @@ angular.module('codexApp.header', [])
       $rootScope.$broadcast('sidebar:toogle');
     }
 
+    // Go To Home note
+    $scope.goToHome = function() {
+      FileService.setCurrentNote(FileService.getDefaultNote());
+      $rootScope.$broadcast('note-view:reload');
+      $state.go("note-view");
+    }
+
+
     // Note View active button
 
     $scope.activateNoteView = function() {
