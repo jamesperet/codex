@@ -11,10 +11,15 @@
 
 .note-container .note {
   padding: 20px;
-  padding-top: 15px;
   border-radius: 10px;
   background-color: white;
-  margin: 25px;
+  margin: 15px;
+  margin-top: 10px;
+  margin-right: 25px;
+  font-family: helvetica;
+  font-weight: 300;
+  font-size: 14px;
+  color: #333;
 }
 
 .ace_editor { height: 100%; }
@@ -27,3 +32,38 @@
 }
 
 .ace_content { cursor: text; }
+
+.note .xsmall {
+  max-width: 150px;
+}
+
+.note .small {
+  max-width: 250px;
+}
+
+.note .medium {
+  max-width: 500px;
+}
+
+.note .medium {
+  max-width: 500px;
+}
+
+.note .large {
+  width: 650px;
+}
+
+
+.note .larger {
+  width: 750px;
+}
+
+.note .huge {
+  width: 1000px;
+}
+
+.note>h1:first-of-type {
+  margin-top: 0px;
+}
+
+.toolbar-actions .spacer { padding-left: 25px; }

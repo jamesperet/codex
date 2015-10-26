@@ -8,3 +8,8 @@
 * [X] Edit and save files
 * [X] Create new files
 * [X] Internal links
+* [X] Icon View
+* [ ] Navigation History
+* [ ] Note versioning
+* [ ] Tags
+* [ ] External Links

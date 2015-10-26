@@ -31,6 +31,12 @@ angular.module('codexApp.header', [])
       });
     }
 
+    // Toogle sidebar
+
+    $scope.toogleSidebar = function() {
+      $rootScope.$broadcast('sidebar:toogle');
+    }
+
     // Note View active button
 
     $scope.activateNoteView = function() {
