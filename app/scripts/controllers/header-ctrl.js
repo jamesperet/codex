@@ -39,11 +39,27 @@ angular.module('codexApp.header', [])
 
     // Go To Home note
     $scope.goToHome = function() {
+      $rootScope.$broadcast('window-view:change');
       FileService.setCurrentNote(FileService.getDefaultNote());
       $rootScope.$broadcast('note-view:reload');
       $state.go("note-view");
     }
 
+    // Go to the precious note
+    $scope.goBack = function() {
+      $rootScope.$broadcast('window-view:change');
+      FileService.goToPreviousNote();
+      $rootScope.$broadcast('note-view:reload');
+      $state.go("note-view");
+    }
+
+    // Go to the next note
+    $scope.goForward = function() {
+      $rootScope.$broadcast('window-view:change');
+      FileService.goToNextNote();
+      $rootScope.$broadcast('note-view:reload');
+      $state.go("note-view");
+    }
 
     // Note View active button
 

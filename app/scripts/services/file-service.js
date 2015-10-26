@@ -6,6 +6,8 @@ angular.module('codexApp')
   var default_home_note = "/Users/james/dev/codex/codex/index.md"
   var notes = [];
   var current_note = "";
+  var note_history = [];
+  var note_history_index = 0;
 
   var prettySize = function(bytes) {
     if (bytes <= 1024) {
@@ -163,7 +165,7 @@ angular.module('codexApp')
 
   this.saveFile = function(file_path, content){
     var fs = require('fs');
-    fs.writeFile(file_path, content, function(err) {
+    fs.writeFile(file_path, content, 'utf-8', function(err) {
         if(err) {
             return console.log(err);
         }
@@ -208,8 +210,32 @@ angular.module('codexApp')
   this.setCurrentNote = function(note) {
     //console.log("searcing for: " + note_id)
     current_note = note;
+    if((note_history.length -1) != note_history_index){
+      var dif = note_history.length - note_history_index - 1;
+      for (var i = 0; i < dif; i++) {
+        note_history.pop();
+      }
+    }
+
+    note_history.push(current_note);
+    note_history_index = note_history.length -1;
+
     //console.log(current_note);
     //console.log("Current_note: " + current_note.title)
+  }
+
+  this.goToPreviousNote = function(){
+    if(note_history_index > 0) {
+      note_history_index = note_history_index - 1;
+      current_note = note_history[note_history_index];
+    }
+  }
+
+  this.goToNextNote = function(){
+    if(note_history_index < (note_history.length - 1)){
+      note_history_index = note_history_index + 1;
+      current_note = note_history[note_history_index];
+    }
   }
 
   this.getNotesDir = function() {
