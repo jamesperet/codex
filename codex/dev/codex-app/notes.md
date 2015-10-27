@@ -13,29 +13,28 @@ Links, snipets and references for the Codex App.
 
 In my project I use this function for getting huge amount of files. It's pretty fast (put require("FS") out to make it even faster):
 
-    var _getAllFilesFromFolder = function(dir) {
+``` javascript
+var _getAllFilesFromFolder = function(dir) {
+    var filesystem = require("fs");
+    var results = [];
 
-        var filesystem = require("fs");
-        var results = [];
+    filesystem.readdirSync(dir).forEach(function(file) {
+        file = dir+'/'+file;
+        var stat = filesystem.statSync(file);
+        if (stat && stat.isDirectory()) {
+            results = results.concat(_getAllFilesFromFolder(file))
+        } else results.push(file);
+    });
 
-        filesystem.readdirSync(dir).forEach(function(file) {
-
-            file = dir+'/'+file;
-            var stat = filesystem.statSync(file);
-
-            if (stat && stat.isDirectory()) {
-                results = results.concat(_getAllFilesFromFolder(file))
-            } else results.push(file);
-
-        });
-
-        return results;
-
-    };
+    return results;
+};
+```
 
 usage is clear:
 
-    _getAllFilesFromFolder(__dirname + "folder");
+``` javascript
+_getAllFilesFromFolder(__dirname + "folder");
+```
 
 ## Electron File object
 
@@ -43,46 +42,53 @@ The DOM's File interface provides abstraction around native files in order to le
 
 Example on getting a real path from a dragged-onto-the-app file:
 
-    <div id="holder">
-      Drag your file here
-    </div>
+``` html
+<div id="holder">
+  Drag your file here
+</div>
 
-    <script>
-      var holder = document.getElementById('holder');
-      holder.ondragover = function () {
-        return false;
-      };
-      holder.ondragleave = holder.ondragend = function () {
-        return false;
-      };
-      holder.ondrop = function (e) {
-        e.preventDefault();
-        var file = e.dataTransfer.files[0];
-        console.log('File you dragged here is', file.path);
-        return false;
-      };
-    </script>
+<script>
+  var holder = document.getElementById('holder');
+  holder.ondragover = function () {
+    return false;
+  };
+  holder.ondragleave = holder.ondragend = function () {
+    return false;
+  };
+  holder.ondrop = function (e) {
+    e.preventDefault();
+    var file = e.dataTransfer.files[0];
+    console.log('File you dragged here is', file.path);
+    return false;
+  };
+</script>
+
+```
 
 ## Using Native Node Modules
 
 The most straightforward way to rebuild native modules is via the electron-rebuild package, which handles the manual steps of downloading headers and building native modules:
 
-    npm install --save-dev electron-rebuild
+``` bash
+npm install --save-dev electron-rebuild
 
-    # Every time you run npm install, run this
-    node ./node_modules/.bin/electron-rebuild
+# Every time you run npm install, run this
+node ./node_modules/.bin/electron-rebuild
+```
 
 ## How to read a file in AngularJS?
 
-    .directive("ngFileSelect",function(){    
-      return {
-        link: function($scope,el){          
-          el.bind("change", function(e){          
-            $scope.file = (e.srcElement || e.target).files[0];
-            $scope.getFile();
-          });          
-        }        
-      }
+``` javascript
+.directive("ngFileSelect",function(){    
+return {
+  link: function($scope,el){          
+    el.bind("change", function(e){          
+      $scope.file = (e.srcElement || e.target).files[0];
+      $scope.getFile();
+    });          
+  }        
+}
+```
 
 Working exapmle: http://plnkr.co/edit/y5n16v?p=preview
 

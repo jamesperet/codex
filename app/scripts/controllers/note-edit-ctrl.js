@@ -10,8 +10,6 @@
 angular.module('codexApp.noteEdit', [])
   .controller('NoteEditCtrl',['$scope', '$rootScope', '$state', 'FileService', function ($scope,  $rootScope, $state, FileService) {
 
-
-
     $scope.note = FileService.getCurrentNote();
     $scope.container = "note-container";
     $scope.raw_data = $scope.note.data;

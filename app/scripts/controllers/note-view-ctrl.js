@@ -11,13 +11,14 @@ angular.module('codexApp.noteView', [])
   .controller('NoteViewCtrl',['$scope', '$rootScope', '$state', 'FileService', function ($scope,  $rootScope, $state, FileService) {
 
     var marked = require('marked');
+
     marked.setOptions({
       renderer: new marked.Renderer(),
       gfm: true,
       tables: true,
       breaks: false,
       pedantic: true,
-      sanitize: false,
+      sanitize: true,
       smartLists: true,
       smartypants: true
     });
@@ -36,11 +37,9 @@ angular.module('codexApp.noteView', [])
         if(!$scope.$$phase) {
           $scope.$apply(function(){
             $scope.html_data = marked($scope.note.data);
-
           });
         } else {
             $scope.html_data = marked($scope.note.data);
-
         }
 
         //console.log($scope.raw_data);
@@ -48,6 +47,12 @@ angular.module('codexApp.noteView', [])
         var a = document.getElementsByTagName('a'), ajax;
         for (var i=0; i<a.length; ++i) {
            a[i].addEventListener('click', handleAnchor, false);
+        }
+
+        // Syntax Highlight
+        code = document.getElementsByTagName("code");
+        for (var i = 0; i < code.length; i++) {
+          hljs.highlightBlock(code[i]);
         }
         function handleAnchor(e){
             e.preventDefault();

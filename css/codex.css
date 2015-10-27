@@ -67,3 +67,7 @@
 }
 
 .toolbar-actions .spacer { padding-left: 25px; }
+
+code {
+  border-radius: 6px;
+}

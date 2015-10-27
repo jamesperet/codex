@@ -16,7 +16,8 @@ angular
     'codexApp.header',
     'codexApp.sidebar',
     'codexApp.noteView',
-    'codexApp.noteEdit'
+    'codexApp.noteEdit',
+    'hljs'
   ])
 
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
