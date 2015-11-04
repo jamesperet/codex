@@ -16,9 +16,9 @@ angular.module('codexApp.noteView', [])
       renderer: new marked.Renderer(),
       gfm: true,
       tables: true,
-      breaks: false,
+      breaks: true,
       pedantic: true,
-      sanitize: true,
+      sanitize: false,
       smartLists: true,
       smartypants: true
     });

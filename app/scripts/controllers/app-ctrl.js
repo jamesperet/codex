@@ -59,10 +59,6 @@ angular.module('codexApp.index', [])
       return false;
     };
 
-
-
-
-
     $scope.openNote = function(note){
       //console.log($location.path());
       console.log("openning note " + note.title + " (" + note.id + ")");
@@ -72,6 +68,16 @@ angular.module('codexApp.index', [])
       //$location.path('/notes/' + 'test1')
       //console.log($location.path());
     }
+
+    $rootScope.$on('file-service:files-loaded', function(){
+      if(!$scope.$$phase) {
+          $scope.$apply(function(){
+            //$scope.itemSpacing();
+          });
+        } else {
+            //$scope.itemSpacing();
+        }
+    })
 
     $rootScope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams){
         console.log(unfoundState.to); // "lazy.state"
@@ -87,5 +93,23 @@ angular.module('codexApp.index', [])
       console.log(fromState)
       console.log(fromParams)
     })
+
+    $scope.itemSpacing = function(){
+      var items = document.getElementsByClassName("file-view-item");
+      for (var i = 0; i < items.length; i++) {
+        items[i].style.margin = "15px";
+      }
+    }
+
+    $scope.isImage = function(file_type) {
+      if(file_type != 'Image') { return true; }
+      else { return false; }
+    }
+
+    $scope.getImageURL = function(img_url) {
+      return "../codex/" + FileService.absoluteToRelativeURL(FileService.getNotesDir(), img_url)
+    }
+
+
 
   }]);

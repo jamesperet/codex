@@ -71,3 +71,66 @@
 code {
   border-radius: 6px;
 }
+
+
+/* File View */
+
+.file-view ul li .thumbnail {
+  width: 220px;
+  border: 1px solid #999;
+  border-radius: 3px;
+  background-color: white;
+  height: 170px;
+  margin-bottom: 5px;
+  overflow: hidden;
+}
+
+.file-view ul li .thumbnail img {
+  width: 100%;
+  height: auto;
+}
+
+.file-view ul li .icon img {
+  height: 140px;
+  padding-top: 10px;
+}
+
+.file-view ul li {
+  list-style: none;
+  padding: 10px;
+  margin: 10px;
+  width: 220px;
+  float: left;
+  text-align: center;
+  height: 220px;
+  padding-bottom: 5px;
+  margin-bottom: 0px;
+}
+
+
+
+pre code.hljs {
+    display: block;
+    line-height: 2em;
+    border-radius: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+code.hljs {
+    display: inline-flex;
+    padding: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    line-height: 1.1em;
+    border-radius: 4px;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+pre code.hljs .hljs-title {
+  margin-right: 0px;
+}
+
+code.hljs .hljs-title {
+  margin-right: 6px;
+}

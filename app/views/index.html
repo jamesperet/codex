@@ -1,4 +1,4 @@
-<table class="table-striped">
+<table class="table-striped" ng-show="false">
   <thead>
     <tr>
       <th>Name</th>
@@ -18,3 +18,17 @@
     </tr>
   </tbody>
 </table>
+
+<div class="file-view">
+  <ul>
+    <li ng-repeat="file in files track by $index" ng-dblclick="openNote(file)" class="file-view-item">
+      <div class="thumbnail" ng-hide="isImage(file.type)">
+        <img src="{{getImageURL(file.path)}}">
+      </div>
+      <div class="icon">
+        <img src="content/imgs/file-icon.png" ng-show="isImage(file.type)">
+      </div>
+      <div>{{file.title}}</div>
+    </li>
+  </ul>
+</div>

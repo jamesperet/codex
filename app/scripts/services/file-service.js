@@ -75,8 +75,13 @@ angular.module('codexApp')
   var SetFileInfo = function(jsonData, dir, file_path, stat) {
     //console.log(jsonData.title);
     if (typeof(jsonData)==='undefined') jsonData = {};
+    if(jsonData.title != "" && jsonData.title != undefined){
+      var title = jsonData.title;
+    } else {
+      var title = getNameFromPath(file_path);
+    }
     var file_obj = {
-      title: jsonData.title,
+      title: title,
       path: file_path,
       size: prettySize(directorySize(dir)),
       type: getFileType(file_path),
@@ -134,6 +139,7 @@ angular.module('codexApp')
 
         //console.log(file_obj);
     });
+    $rootScope.$broadcast('file-service:files-loaded');
     return results;
   };
 
@@ -190,6 +196,61 @@ angular.module('codexApp')
       accessed_at: dateFormat(stat["atime"], "mediumDate")
     }
     return file_obj
+  }
+
+  var getNameFromPath = function(path) {
+    path = path.split('/');
+    var filename = path[path.length - 1];
+    //filename = filename.split('.');
+    //filename.pop();
+    //name = filename[filename.length -1];
+    return filename
+  }
+
+  var getUrlParts = function(url) {
+      var a = document.createElement('a');
+      a.href = url;
+
+      return {
+          href: a.href,
+          host: a.host,
+          hostname: a.hostname,
+          port: a.port,
+          pathname: a.pathname,
+          protocol: a.protocol,
+          hash: a.hash,
+          search: a.search
+      };
+  }
+
+  // Absolute to relative URL
+  this.absoluteToRelativeURL = function(current_url, absolute_url) {
+    // split urls and create arrays
+    var current_path = current_url.split('/');
+    var absolute_path = getUrlParts(absolute_url).pathname.split('/');
+    // remove the current note's filename from the url and the image filename from the url
+    //current_path.pop();
+    current_path.shift();
+    //absolute_path.shift();
+    // count how many folders the current path has
+    var current_path_count = 0;
+    for (var i = 0; i < current_path.length; i++) {
+      current_path_count = current_path_count + 1;
+    }
+    // count how many folders the absolute path has
+    var absolute_path_count = 0;
+    for (var i = 0; i < absolute_path.length; i++) {
+      absolute_path_count = absolute_path_count + 1;
+    }
+    absolute_path_count = absolute_path_count - 3;
+    //dif = current_path_count - (absolute_path_count -1);
+    for (var i = 0; i < absolute_path_count; i++) {
+      absolute_path.shift();
+    }
+    // make the relative path a string again
+    var relative_path = absolute_path.join('/');
+    console.log("* Converted relative URL: " + relative_path)
+    return relative_path;
   }
 
 
