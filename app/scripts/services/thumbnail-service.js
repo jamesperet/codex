@@ -9,12 +9,12 @@ angular.module('codexApp')
 
     var options = {
       screenSize: {
-        width: 320
-      , height: 480
+        width: 220
+      , height: 170
       }
     , shotSize: {
-        width: 320
-      , height: 'all'
+        width: 220
+      , height: '170'
       }
     , userAgent: 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_2 like Mac OS X; en-us)'
         + ' AppleWebKit/531.21.20 (KHTML, like Gecko) Mobile/7B298g'
@@ -25,7 +25,7 @@ angular.module('codexApp')
     var page_data = String.fromCharCode.apply(null, data);
 
     var thumbnail_path = getThumbnailName(file_path);
-    var page = '<html><body><div class="note-container"><div class="note">' + marked(page_data); + '</div></div></body></html>';
+    var page = '<html><head><style>body {width: 210px;} body, h1, h2, h3, h4, h5, p, span, table, code, ul, ol { font-family: helvetica; overflow-wrap: break-word; font-weight: 300; } p, ul, ol, code { font-size: 11px;} h1 {font-size: 16px;} h2 {font-size: 14px;} h3 { font-size: 12px; font-weight: 400} code { font-family: monospace; }</style></head><body>' + marked(page_data); + '</body></html>';
     var renderStream = webshot(page, thumbnail_path, options, function(err) {
       // screenshot now saved to hello_world.png
     });

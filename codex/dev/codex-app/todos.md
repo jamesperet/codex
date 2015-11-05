@@ -8,7 +8,7 @@
 * [X] Edit and save files
 * [X] Create new files
 * [X] Internal links
-* [ ] Icon View
+* [X] Icon View
 * [X] Navigation History
 * [X] Syntax Highlight
 * [ ] Note versioning
@@ -20,3 +20,4 @@
 * [ ] Right Click Menus
 * [ ] Copy Note link
 * [ ] S3 Backup
+* [ ] Web Clipper
