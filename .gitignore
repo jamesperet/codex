@@ -7,3 +7,4 @@ node_modules
 
 codex/Research/*
 codex/Inbox/*
+codex/*.thumb.png

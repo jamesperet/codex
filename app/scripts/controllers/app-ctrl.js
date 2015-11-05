@@ -110,6 +110,4 @@ angular.module('codexApp.index', [])
       return "../codex/" + FileService.absoluteToRelativeURL(FileService.getNotesDir(), img_url)
     }
 
-
-
   }]);

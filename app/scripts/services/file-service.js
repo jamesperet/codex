@@ -1,5 +1,5 @@
 angular.module('codexApp')
-.service('FileService', [ '$rootScope', '$http',  function($rootScope, $http) {
+.service('FileService', [ '$rootScope', '$http', 'ThumbnailService',  function($rootScope, $http, ThumbnailService) {
 
   var notes_dir = "/Users/james/dev/codex/codex";
   var default_notes_dir = "/Users/james/dev/codex/codex/inbox";
@@ -72,6 +72,27 @@ angular.module('codexApp')
     }
   }
 
+  var getThumbnail = function(file_path) {
+    var type = getFileType(file_path);
+    switch (type) {
+      case "Markdown":
+        return ThumbnailService.createNoteThumbnail(file_path);
+      default:
+        return "";
+    }
+  }
+
+  var isValidFile = function(file) {
+    if(file != ".DS_Store" && file != "info.json") {
+      var parts = file.split('.');
+      if (parts[parts.length -2] == "thumb") {
+        return false;
+      } else {
+        return true
+      }
+    }
+  }
+
   var SetFileInfo = function(jsonData, dir, file_path, stat) {
     //console.log(jsonData.title);
     if (typeof(jsonData)==='undefined') jsonData = {};
@@ -79,6 +100,11 @@ angular.module('codexApp')
       var title = jsonData.title;
     } else {
       var title = getNameFromPath(file_path);
+    }
+    if(jsonData.thumbnail != "" && jsonData.thumbnail != undefined){
+      var thumbnail_path = jsonData.thumbnail;
+    } else {
+      var thumbnail_path = getThumbnail(file_path);
     }
     var file_obj = {
       title: title,
@@ -90,7 +116,8 @@ angular.module('codexApp')
       id: jsonData.id,
       created_at: dateFormat(stat["birthdate"], "mediumDate"),
       modified_at: dateFormat(stat["mtime"], "mediumDate"),
-      accessed_at: dateFormat(stat["atime"], "mediumDate")
+      accessed_at: dateFormat(stat["atime"], "mediumDate"),
+      thumbnail: thumbnail_path
     }
     return file_obj;
   }
@@ -130,7 +157,7 @@ angular.module('codexApp')
         if (stat && stat.isDirectory()) {
             results = results.concat(getAllFilesFromFolder(file_path))
         } else {
-          if(file != ".DS_Store" && file != "info.json") {
+          if(isValidFile(file)) {
             var jsonData = {};
             var file_obj = SetFileInfo(jsonData, dir, file_path, stat)
             results.push(file_obj);
@@ -223,8 +250,7 @@ angular.module('codexApp')
       };
   }
 
-  // Absolute to relative URL
-  this.absoluteToRelativeURL = function(current_url, absolute_url) {
+  var absoluteToRelativeURL = function(current_url, absolute_url) {
     // split urls and create arrays
     var current_path = current_url.split('/');
     var absolute_path = getUrlParts(absolute_url).pathname.split('/');
@@ -251,6 +277,11 @@ angular.module('codexApp')
     var relative_path = absolute_path.join('/');
     console.log("* Converted relative URL: " + relative_path)
     return relative_path;
+  }
+
+  // Absolute to relative URL
+  this.absoluteToRelativeURL = function(current_url, absolute_url) {
+    return absoluteToRelativeURL(current_url, absolute_url);
   }
 
 
