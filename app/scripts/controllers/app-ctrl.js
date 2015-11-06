@@ -8,10 +8,25 @@
  * Controller of the domainManagerApp
  */
 angular.module('codexApp.index', [])
-  .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', 'FileService', function ($scope,  $rootScope, $state, $location, FileService) {
+  .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', 'FileService', 'PrefsService', function ($scope,  $rootScope, $state, $location, FileService, PrefsService) {
 
-    $scope.files = FileService.getNotes();
+    $scope.setView = function() {
+      $scope.view = PrefsService.getCurrentView();
+      switch ($scope.view) {
+        case "All Notes":
+          $scope.files = FileService.getAllNotes();
+          break;
+        case "All Files":
+          $scope.files = FileService.getAllFiles();
+          break;
+      }
+    }
 
+    $scope.setView();
+
+    $rootScope.$on('window-view:change', function(){
+      $scope.setView();
+    });
 
     var remote = require('remote')
     var Menu = remote.require('menu')

@@ -302,11 +302,27 @@ angular.module('codexApp')
     return 0;
   };
 
+  var filterNotes = function(files) {
+    var filtered = [];
+    for (var i = 0; i < files.length; i++) {
+      if(files[i].type == "Markdown") {
+        filtered.push(files[i]);
+      }
+    }
+    return filtered;
+  }
+
 
 
   // RESPONSE
-  this.getNotes = function() {
+  this.getAllFiles = function() {
     notes = getAllFilesFromFolder();
+    return notes.sort(date_sort_asc);
+  }
+
+  this.getAllNotes = function() {
+    notes = getAllFilesFromFolder();
+    notes = filterNotes(notes);
     return notes.sort(date_sort_asc);
   }
 

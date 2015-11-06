@@ -28,6 +28,7 @@
     <script src="scripts/controllers/note-edit-ctrl.js"></script>
     <script src="scripts/services/file-service.js"></script>
     <script src="scripts/services/thumbnail-service.js"></script>
+    <script src="scripts/services/prefs-service.js"></script>
     <script src="scripts/services/date-formatter.js" charset="utf-8"></script>
 
     <script>
@@ -81,9 +82,13 @@
           <div class="pane pane-sm sidebar" ng-controller="SidebarCtrl" ng-show="showSidebar">
             <nav class="nav-group">
               <h5 class="nav-group-title">My Notes</h5>
-              <span class="nav-group-item active" ng-click="goToAllNotes()">
-                <span class="icon icon-archive"></span>
+              <span class="nav-group-item" ng-class="sidebar[0].active" ng-click="goToAllNotes()">
+                <span class="icon icon-folder"></span>
                 All Notes
+              </span>
+              <span class="nav-group-item" ng-class="sidebar[1].active" ng-click="goToAllFiles()">
+                <span class="icon icon-archive"></span>
+                All Files
               </span>
               <span class="nav-group-item">
                 <span class="icon icon-book"></span>
