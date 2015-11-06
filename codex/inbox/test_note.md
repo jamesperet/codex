@@ -51,3 +51,9 @@ This is a ```inline``` code block.
 ```
 This is a code block
 ```
+
+## Tables
+
+| header 1  | header 2  | header 3  |
+|-----------|-----------|-----------|
+| content 1 | content 2 | content 3 |
