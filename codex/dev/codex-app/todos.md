@@ -12,6 +12,7 @@
 * [X] Navigation History
 * [X] Syntax Highlight
 * [X] File Sorting Asc
+* [X] Open link in external browser
 * [ ] Image View
 * [X] All Files / All Notes View
 * [ ] Folders/Notebook view & navigation

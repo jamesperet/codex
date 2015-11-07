@@ -59,6 +59,8 @@ angular.module('codexApp.noteView', [])
             var r = new RegExp('^(?:[a-z]+:)?//', 'i');
             if(e.srcElement.protocol == "http:"){
               console.log("-> Prevented link from opening: " + e.srcElement.outerHTML.match(/href="([^"]*)/)[1]);
+              var open = require("open");
+              open(e.srcElement.outerHTML.match(/href="([^"]*)/)[1]);
             }
             if(e.srcElement.protocol == "file:"){
               var current_note = FileService.getCurrentNote().path;
