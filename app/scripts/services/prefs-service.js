@@ -1,7 +1,7 @@
 angular.module('codexApp')
 .service('PrefsService', [ '$rootScope', '$http',  function($rootScope, $http) {
 
-  var views = ["All Notes", "All Files"];
+  var views = ["All Notes", "All Files", "Notebooks"];
   var current_view = "All Notes"
 
   this.getCurrentView = function() {

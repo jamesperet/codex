@@ -5,6 +5,4 @@ node_modules
 
 */.DS_Store
 
-codex/Research/*
-codex/Inbox/*
-codex/*.thumb.png
+codex/*

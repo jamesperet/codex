@@ -30,6 +30,18 @@ angular.module('codexApp.sidebar', [])
       $state.go("index");
     }
 
+    $scope.goToNotebooks = function() {
+      PrefsService.setCurrentView("Notebooks");
+      $scope.activateSidebarBtn(2);
+      $rootScope.$broadcast('main-window:file-list');
+      $rootScope.$broadcast('window-view:change');
+      $state.go("index");
+    }
+
+    $rootScope.$on('main-window:note-view', function(){
+      $scope.activateSidebarBtn();
+    });
+
     $rootScope.$on('sidebar:toogle', function() {
       if(!$scope.$$phase) {
         $scope.$apply(function(){
@@ -56,6 +68,10 @@ angular.module('codexApp.sidebar', [])
       {
         "view" : "All Files",
         "active" : ""
+      },
+      {
+        "view" : "Notebooks",
+        "active" : ""
       }
     ]
 
@@ -71,6 +87,7 @@ angular.module('codexApp.sidebar', [])
         for (var i = 0; i < $scope.sidebar.length; i++) {
           $scope.sidebar[i].active = "";
         }
+        if (typeof(num)==='undefined') return;
         $scope.sidebar[num].active = "active";
       }
     }

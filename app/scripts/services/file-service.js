@@ -284,19 +284,35 @@ angular.module('codexApp')
     return absoluteToRelativeURL(current_url, absolute_url);
   }
 
+  // Get folders
+
+  var getFolders = function(root) {
+    if (typeof(root)==='undefined') root = notes_dir;
+    var filesystem = require("fs");
+    var results = [];
+    filesystem.readdirSync(root).forEach(function(file) {
+        file_path = root+'/'+file;
+        var stat = filesystem.statSync(file_path);
+        if (stat && stat.isDirectory()) {
+          results.push(SetFileInfo( undefined, root, file_path, stat));
+        }
+    });
+    console.log(results);
+    return results;
+  }
+
+  this.getFolders = function(root){
+    return getFolders(root);
+  }
+
   // Sort files
   var date_sort_asc = function (date1, date2) {
-    // This is a comparison function that will result in dates being sorted in
-    // ASCENDING order. As you can see, JavaScript's native comparison operators
-    // can be used to compare dates. This was news to me.
     if (date1.modified_at > date2.modified_at) return 1;
     if (date1.modified_at < date2.modified_at) return -1;
     return 0;
   };
 
   var date_sort_desc = function (date1, date2) {
-    // This is a comparison function that will result in dates being sorted in
-    // DESCENDING order.
     if (date1.modified_at > date2.modified_at) return -1;
     if (date1.modified_at < date2.modified_at) return 1;
     return 0;

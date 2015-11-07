@@ -13,7 +13,7 @@
 * [X] Syntax Highlight
 * [X] File Sorting Asc
 * [ ] Image View
-* [ ] All Files / All Notes View
+* [X] All Files / All Notes View
 * [ ] Folders/Notebook view & navigation
 * [ ] Nav btns go to file views
 * [ ] Note versioning
@@ -29,3 +29,6 @@
 * [ ] Web Clipper
 * [ ] Multiple source folders
 * [ ] Footer bar infos
+* [ ] File View Buffering
+* [ ] Retina Thumbnails
+* [ ] Charset Encoding bug

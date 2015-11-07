@@ -19,6 +19,8 @@ angular.module('codexApp.index', [])
         case "All Files":
           $scope.files = FileService.getAllFiles();
           break;
+        case "Notebooks":
+          $scope.files = FileService.getFolders();
       }
     }
 
