@@ -27,6 +27,7 @@ angular.module('codexApp')
 
   var getFileType = function(path) {
     var extension = getFilePathExtension(path);
+    if (typeof(extension)==='undefined' || extension == "") extension = 'dir';
     switch (extension) {
       case "pdf":
         return "Document";
@@ -36,8 +37,10 @@ angular.module('codexApp')
         return "Image";
       case "md":
         return "Markdown";
-      default:
+      case 'dir':
         return "Folder";
+      default:
+        return "File";
     }
   }
 
@@ -165,6 +168,23 @@ angular.module('codexApp')
         }
 
         //console.log(file_obj);
+    });
+    $rootScope.$broadcast('file-service:files-loaded');
+    return results;
+  };
+
+  var getFilesFromFolder = function(dir) {
+    if (typeof(dir)==='undefined') dir = notes_dir;
+    var filesystem = require("fs");
+    var results = [];
+    filesystem.readdirSync(dir).forEach(function(file) {
+      file_path = dir+'/'+file;
+      var stat = filesystem.statSync(file_path);
+      if(isValidFile(file)) {
+        var jsonData = {};
+        var file_obj = SetFileInfo(jsonData, dir, file_path, stat)
+        results.push(file_obj);
+      }
     });
     $rootScope.$broadcast('file-service:files-loaded');
     return results;
@@ -334,6 +354,12 @@ angular.module('codexApp')
   this.getAllFiles = function(dir) {
     if (typeof(dir)==='undefined') dir = notes_dir;
     notes = getAllFilesFromFolder(dir);
+    return notes.sort(date_sort_asc);
+  }
+
+  this.getFiles = function(dir) {
+    if (typeof(dir)==='undefined') dir = notes_dir;
+    notes = getFilesFromFolder(dir);
     return notes.sort(date_sort_asc);
   }
 

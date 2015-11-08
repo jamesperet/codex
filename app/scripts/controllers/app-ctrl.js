@@ -23,7 +23,7 @@ angular.module('codexApp.index', [])
           $scope.files = FileService.getFolders();
           break;
         case "Notebook":
-          $scope.files = FileService.getAllFiles($scope.current_folder);
+          $scope.files = FileService.getFiles($scope.current_folder);
           break;
       }
     }
