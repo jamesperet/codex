@@ -107,7 +107,12 @@ code {
   margin-bottom: 0px;
 }
 
-
+.notebook-thumbnail {
+  width: 220px;
+  height: 170px;
+  margin-bottom: 5px;
+  overflow: hidden;
+}
 
 pre code.hljs {
     display: block;
@@ -133,4 +138,36 @@ pre code.hljs .hljs-title {
 
 code.hljs .hljs-title {
   margin-right: 6px;
+}
+
+.icon-tabs {
+    margin: 0px;
+    margin-left: -34px;
+    margin-top: 0px;
+}
+
+.icon-tabs li {
+    float: left;
+    list-style: none;
+    text-align: center;
+    font-size: 12px;
+    line-height: 14px;
+    padding-bottom: 4px;
+    margin-right: 12px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 3px;
+}
+
+.icon-tabs li.active {
+  background-color: #C3C2C3;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.well {
+  background-color: #ECECEC;
+  padding: 15px;
+  height: 100%;
+  padding-top: 2px;
 }

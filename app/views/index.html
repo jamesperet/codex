@@ -21,11 +21,12 @@
 
 <div class="file-view">
   <ul>
-    <li ng-repeat="file in files track by $index" ng-dblclick="openNote(file)" class="file-view-item">
-      <div class="thumbnail">
+    <li ng-repeat="file in files track by $index" ng-dblclick="openFile(file)" class="file-view-item">
+      <div class="thumbnail" ng-show="file.type != 'Folder'">
         <img src="{{getImageURL(file.path)}}" ng-hide="isImage(file.type)">
         <img src="{{file.thumbnail}}" ng-show="isImage(file.type)">
       </div>
+      <img class="notebook-thumbnail" src="content/imgs/notebook-icon.png" ng-show="file.type == 'Folder'">
       <div>{{file.title}}</div>
     </li>
   </ul>

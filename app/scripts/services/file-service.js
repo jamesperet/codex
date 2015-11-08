@@ -37,7 +37,7 @@ angular.module('codexApp')
       case "md":
         return "Markdown";
       default:
-        return "File";
+        return "Folder";
     }
   }
 
@@ -331,8 +331,9 @@ angular.module('codexApp')
 
 
   // RESPONSE
-  this.getAllFiles = function() {
-    notes = getAllFilesFromFolder();
+  this.getAllFiles = function(dir) {
+    if (typeof(dir)==='undefined') dir = notes_dir;
+    notes = getAllFilesFromFolder(dir);
     return notes.sort(date_sort_asc);
   }
 

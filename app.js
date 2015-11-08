@@ -40,6 +40,7 @@ var createPreferencesWindow = function() {
       width: 500,
       height: 300,
       show: true,
+      resizable: false,
       'title-bar-style': 'hidden',
       'fullscreen' : false
     });

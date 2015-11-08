@@ -20,10 +20,29 @@
     <header class="toolbar toolbar-header">
       <h1 class="title">Preferences</h1>
 
-      <div class="toolbar-actions">
-        <img src="content/imgs/prefs-icon.png" style="width: 32px; height: 32px;">
-      </div>
+      <ul class="icon-tabs">
+        <li class="active">
+          <img src="content/imgs/prefs-icon.png" style="width: 32px; height: 32px;"><br>General
+        </li>
+        <li>
+          <img src="content/imgs/db-icon.png" style="width: 32px; height: 32px;"><br>Databases
+        </li>
+      </ul>
     </header>
+    <div class="well">
+      <p>Default View when opening the app:<br>
+      <select class="form-control" style="width: 220px;">
+        <option>All Notes</option>
+        <option>All Files</option>
+        <option>Index note</option>
+      </select></p>
+      <p>Default Notebook:
+      <select class="form-control" style="width: 220px;">
+        <option>Notebook 1</option>
+        <option>Notebook 2</option>
+        <option>Notebook 3</option>
+      </select></p>
 
+    </div>
   </body>
 </html>

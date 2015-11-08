@@ -21,6 +21,10 @@ angular.module('codexApp.index', [])
           break;
         case "Notebooks":
           $scope.files = FileService.getFolders();
+          break;
+        case "Notebook":
+          $scope.files = FileService.getAllFiles($scope.current_folder);
+          break;
       }
     }
 
@@ -76,14 +80,21 @@ angular.module('codexApp.index', [])
       return false;
     };
 
-    $scope.openNote = function(note){
-      //console.log($location.path());
-      console.log("openning note " + note.title + " (" + note.id + ")");
-      FileService.setCurrentNote(note)
-      $rootScope.$broadcast('main-window:note-view');
-      $state.go("note-view");
-      //$location.path('/notes/' + 'test1')
-      //console.log($location.path());
+    $scope.openFile = function(file){
+      console.log("openning " + file.type + " link: " + file.path);
+      switch (file.type) {
+        case "Markdown":
+          FileService.setCurrentNote(file)
+          $rootScope.$broadcast('main-window:note-view');
+          $state.go("note-view");
+          break;
+        case "Folder":
+          $scope.current_folder = file.path;
+          PrefsService.setCurrentView("Notebook");
+          $scope.setView();
+          break;
+      }
+
     }
 
     $rootScope.$on('file-service:files-loaded', function(){

@@ -13,3 +13,4 @@
 * [Todo's](dev/codex-app/todos.md)
 * [Notes](dev/codex-app/notes.md) 
 * [Highlight JS](dev/codex-app/highlightjs.md)
+* [Encryption](dev/codex-app/Encryption.md)
