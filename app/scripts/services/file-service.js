@@ -274,6 +274,7 @@ angular.module('codexApp')
     // split urls and create arrays
     var current_path = current_url.split('/');
     var absolute_path = getUrlParts(absolute_url).pathname.split('/');
+    var root_path = getUrlParts(notes_dir).pathname.split('/');
     // remove the current note's filename from the url and the image filename from the url
     //current_path.pop();
     current_path.shift();
@@ -288,9 +289,13 @@ angular.module('codexApp')
     for (var i = 0; i < absolute_path.length; i++) {
       absolute_path_count = absolute_path_count + 1;
     }
-    absolute_path_count = absolute_path_count - 3;
+    var root_path_count = 0;
+    for (var i = 0; i < root_path.length; i++) {
+      root_path_count = root_path_count + 1;
+    }
+    var count = current_path_count - root_path_count;
     //dif = current_path_count - (absolute_path_count -1);
-    for (var i = 0; i < absolute_path_count; i++) {
+    for (var i = 0; i < count; i++) {
       absolute_path.shift();
     }
     // make the relative path a string again

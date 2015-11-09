@@ -8,6 +8,7 @@ Links, snipets and references for the Codex App.
 * [Packery](http://packery.metafizzy.co/) - The bin-packing layout library
 * [Mansonary](http://masonry.desandro.com/) - Cascading grid layout library
 * [Wavesurfer.js](http://wavesurfer-js.org/) - Web Audio Waveform Visualizer
+* [Cheerio](https://github.com/cheeriojs/cheerio) - Fast, flexible, and lean implementation of core jQuery designed specifically for the server
 
 ## List folder and files
 

@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "bower": "^1.6.3",
+    "cheerio": "^0.19.0",
     "electron-packager": "^5.0.0",
     "electron-prebuilt": "^0.33.3",
     "electron-rebuild": "^1.0.1",

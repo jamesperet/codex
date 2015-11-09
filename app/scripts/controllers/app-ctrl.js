@@ -135,7 +135,7 @@ angular.module('codexApp.index', [])
     }
 
     $scope.getImageURL = function(img_url) {
-      return "../codex/" + FileService.absoluteToRelativeURL(FileService.getNotesDir(), img_url)
+      return "" + FileService.absoluteToRelativeURL(FileService.getNotesDir(), img_url)
     }
 
   }]);
