@@ -218,12 +218,13 @@ angular.module('codexApp')
 
   this.saveFile = function(file_path, content){
     var fs = require('fs');
-    fs.writeFile(file_path, content, 'utf-8', function(err) {
+    fs.writeFile(file_path, content, 'utf8', function(err) {
         if(err) {
-            return console.log(err);
+            console.log("-> ERROR SAVING FILE: " + file_path);
+            console.log(err);
+        } else {
+          console.log("-> FILE SAVED: " + file_path);
         }
-
-        console.log("-> FILE SAVED: " + file_path);
     });
   }
 

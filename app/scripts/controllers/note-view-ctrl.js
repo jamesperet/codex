@@ -33,7 +33,9 @@ angular.module('codexApp.noteView', [])
 
     $scope.loadNoteView = function() {
       filesystem.readFile($scope.note.path, function(err, data) {
-        $scope.note.data = String.fromCharCode.apply(null, data)
+        //$scope.note.data = String.fromCharCode.apply(null, data);
+        $scope.note.data = new Buffer(data).toString('utf8')
+        console.log($scope.note.data);
         if(!$scope.$$phase) {
           $scope.$apply(function(){
             $scope.html_data = marked($scope.note.data);
