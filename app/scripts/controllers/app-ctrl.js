@@ -36,53 +36,9 @@ angular.module('codexApp.index', [])
     });
 
     var remote = require('remote')
-    var Menu = remote.require('menu')
-    var MenuItem = remote.require('menu-item')
-
-    // Build our new menu
-    var menu = new Menu()
-    menu.append(new MenuItem({
-      label: "append",
-      click: function() {
-        // Trigger an alert when menu item is clicked
-        alert('Deleted')
-      }
-    }))
-    menu.append(new MenuItem({
-      label: 'More Info...',
-      click: function() {
-        // Trigger an alert when menu item is clicked
-        alert('Here is more information')
-      }
-    }))
-
-    // Add the listener
-    document.addEventListener('DOMContentLoaded', function () {
-      document.querySelector('.js-context-menu').addEventListener('click', function (event) {
-        menu.popup(remote.getCurrentWindow());
-      })
-    })
-
-
-
-
-    var holder = document.getElementById('holder');
-    holder.ondragover = function () {
-      return false;
-    };
-    holder.ondragleave = holder.ondragend = function () {
-      return false;
-    };
-    holder.ondrop = function (e) {
-      e.preventDefault();
-      var file = e.dataTransfer.files[0];
-      console.log('File you dragged here is', file.path);
-      document.getElementById('image-container').src = file.path
-      return false;
-    };
 
     $scope.openFile = function(file){
-      console.log("openning " + file.type + " link: " + file.path);
+      console.log("-> Openning " + file.type + " link: " + file.path);
       switch (file.type) {
         case "Markdown":
           FileService.setCurrentNote(file)
@@ -95,7 +51,17 @@ angular.module('codexApp.index', [])
           $scope.setView();
           break;
       }
+    }
 
+    $scope.editFile = function(file){
+      console.log("-> Editing " + file.type + " link: " + file.path);
+      switch (file.type) {
+        case "Markdown":
+          FileService.setCurrentNote(file)
+          $rootScope.$broadcast('main-window:note-edit');
+          $state.go("note-edit");
+          break;
+      }
     }
 
     $rootScope.$on('file-service:files-loaded', function(){
@@ -145,7 +111,20 @@ angular.module('codexApp.index', [])
       } else {
         return "";
       }
-
     }
 
+    var Menu = remote.require('menu');
+    var MenuItem = remote.require('menu-item');
+    var currentWindow = remote.getCurrentWindow();
+
+    $scope.fileContextMenu = function (file) {
+      var menu = new Menu();
+      menu.append(new MenuItem({ label: 'Open File', click: function () {
+        $scope.openFile(file);
+      } }));
+      menu.append(new MenuItem({ label: 'Edit File', click: function () {
+        $scope.editFile(file);
+      } }));
+      menu.popup(currentWindow);
+    }
   }]);

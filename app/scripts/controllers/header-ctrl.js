@@ -101,4 +101,16 @@ angular.module('codexApp.header', [])
       }
     });
 
+    $rootScope.$on('main-window:note-edit', function() {
+      if(!$scope.$$phase) {
+        $scope.$apply(function(){
+          $scope.noteViewBtnClass = "";
+          $scope.noteEditBtnClass = "active";
+        });
+      } else {
+        $scope.noteViewBtnClass = "";
+        $scope.noteEditBtnClass = "active";
+      }
+    });
+
   }]);

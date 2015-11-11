@@ -22,7 +22,7 @@
 <div class="file-view">
   <ul>
     <li ng-repeat="file in files track by $index" ng-dblclick="openFile(file)" class="file-view-item">
-      <div class="thumbnail-icon" ng-show="file.type != 'Folder'">
+      <div class="thumbnail-icon" ng-show="file.type != 'Folder'" ng-right-click="fileContextMenu(file)">
         <img src="{{getImageURL(file.path)}}" ng-hide="isImage(file.type)">
         <img src="{{file.thumbnail}}" ng-show="isImage(file.type)">
       </div>

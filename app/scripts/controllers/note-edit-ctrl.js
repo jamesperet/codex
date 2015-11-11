@@ -11,10 +11,8 @@ angular.module('codexApp.noteEdit', [])
   .controller('NoteEditCtrl',['$scope', '$rootScope', '$state', 'FileService', function ($scope,  $rootScope, $state, FileService) {
 
     $scope.note = FileService.getCurrentNote();
-    $scope.container = "note-container";
-    $scope.raw_data = $scope.note.data;
-    $scope.savedBeforeQuit = false;
     console.log('-> Editing File: ' + $scope.note.path)
+    $scope.savedBeforeQuit = false;
 
     $rootScope.$on('window-view:change', function() {
       if($scope.raw_data != "" && $scope.raw_data != undefined) {
@@ -26,13 +24,34 @@ angular.module('codexApp.noteEdit', [])
 
     });
 
+    $scope.loadFile = function() {
+      var fs = require('fs');
+      fs.readFile($scope.note.path, function(err, data) {
+        $scope.note.data = new Buffer(data).toString('utf8')
+        if(!$scope.$$phase) {
+          $scope.$apply(function(){
+            $scope.raw_data = $scope.note.data;
+          });
+        } else {
+            $scope.raw_data = $scope.note.data;
+        }
+      });
+      console.log($scope.raw_data);
+    }
+
+    if($scope.note.data != undefined || $scope.note.data != ""){
+      $scope.loadFile();
+    } else {
+      $scope.raw_data = $scope.note.data;
+    }
+
     $scope.aceLoaded = function(_editor) {
        _editor.setReadOnly(false);
       //console.log($scope.raw_data);
     };
 
     $scope.aceChanged = function(e) {
-      console.log("-> Note data changed.");
+      //console.log("-> Note data changed.");
     };
 
   }]);
