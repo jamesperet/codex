@@ -272,6 +272,8 @@ angular.module('codexApp')
   }
 
   var absoluteToRelativeURL = function(current_url, absolute_url) {
+    //console.log(current_url);
+    //console.log(absolute_url);
     // split urls and create arrays
     var current_path = current_url.split('/');
     var absolute_path = getUrlParts(absolute_url).pathname.split('/');
@@ -295,6 +297,8 @@ angular.module('codexApp')
       root_path_count = root_path_count + 1;
     }
     var count = current_path_count - root_path_count;
+    console.log(current_path_count + " - " + root_path_count + " = " + count);
+
     //dif = current_path_count - (absolute_path_count -1);
     for (var i = 0; i < count; i++) {
       absolute_path.shift();
@@ -308,6 +312,40 @@ angular.module('codexApp')
   // Absolute to relative URL
   this.absoluteToRelativeURL = function(current_url, absolute_url) {
     return absoluteToRelativeURL(current_url, absolute_url);
+  }
+
+  var shortenPath = function(path) {
+    //console.log(current_url);
+    //console.log(absolute_url);
+    // split urls and create arrays
+    var current_path = path.split('/');
+    var root_path = getUrlParts(notes_dir).pathname.split('/');
+    // count how many folders the current path has
+    var current_path_count = 0;
+    for (var i = 0; i < current_path.length; i++) {
+      current_path_count = current_path_count + 1;
+    }
+    var root_path_count = 0;
+    for (var i = 0; i < root_path.length; i++) {
+      root_path_count = root_path_count + 1;
+    }
+    var diff = current_path_count - root_path_count;
+    var count = current_path_count - diff;
+    console.log(current_path_count + " - " + root_path_count + " = " + count);
+
+    //dif = current_path_count - (absolute_path_count -1);
+    for (var i = 0; i < count; i++) {
+      current_path.shift();
+    }
+    // make the relative path a string again
+    var relative_path = current_path.join('/');
+    console.log("* Shortened Path: " + relative_path)
+    return relative_path;
+  }
+
+  // Absolute to relative URL
+  this.shortenPath = function(path) {
+    return shortenPath(path);
   }
 
   // Get folders

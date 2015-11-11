@@ -20,6 +20,7 @@ angular.module('codexApp.index', [])
           $scope.files = FileService.getAllFiles();
           break;
         case "Notebooks":
+          $scope.current_folder = FileService.getNotesDir();
           $scope.files = FileService.getFolders();
           break;
         case "Notebook":
@@ -136,6 +137,15 @@ angular.module('codexApp.index', [])
 
     $scope.getImageURL = function(img_url) {
       return "" + FileService.absoluteToRelativeURL(FileService.getNotesDir(), img_url)
+    }
+
+    $scope.shortenPath = function(path) {
+      if($scope.current_folder != null) {
+        return FileService.shortenPath(path);
+      } else {
+        return "";
+      }
+
     }
 
   }]);

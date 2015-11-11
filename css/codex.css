@@ -75,7 +75,7 @@ code {
 
 /* File View */
 
-.file-view ul li .thumbnail {
+.file-view ul li .thumbnail-icon {
   width: 220px;
   border: 1px solid #999;
   border-radius: 3px;
@@ -85,7 +85,7 @@ code {
   overflow: hidden;
 }
 
-.file-view ul li .thumbnail img {
+.file-view ul li .thumbnail-icon img {
   width: 100%;
   height: auto;
 }
@@ -107,11 +107,16 @@ code {
   margin-bottom: 0px;
 }
 
-.notebook-thumbnail {
+.notebook-icon {
   width: 220px;
   height: 170px;
   margin-bottom: 5px;
   overflow: hidden;
+}
+
+.notebook-icon img {
+  width: 220px;
+  height: 170px;
 }
 
 pre code.hljs {
@@ -170,4 +175,26 @@ code.hljs .hljs-title {
   padding: 15px;
   height: 100%;
   padding-top: 2px;
+}
+
+.icon-name {
+  width: 220px;
+}
+
+.notebook-icon-title {
+  position: relative;
+  top: -102px;
+  font-family: Helvetica-Bold;
+  font-size: 18px;
+  color: #000000;
+  line-height: 22px;
+}
+
+.notebook-icon-info {
+  position: relative;
+  top: -48px;
+  font-family: Helvetica;
+  font-size: 12px;
+  color: #000000;
+  line-height: 14px;
 }
