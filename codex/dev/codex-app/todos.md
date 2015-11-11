@@ -15,13 +15,13 @@
 * [X] Open link in external browser
 * [ ] Image View
 * [X] All Files / All Notes View
-* [ ] Folders/Notebook view & navigation
+* [X] Folders/Notebook view & navigation
 * [ ] Nav btns go to file views
 * [ ] Note versioning
 * [ ] Tags
 * [ ] External Links (browser view)
 * [ ] Save User settings
-* [ ] Preferences Panel
+* [X] Preferences Panel
 * [ ] Welcome Panel
 * [ ] New file Dialog
 * [ ] Right Click Menus
@@ -32,4 +32,5 @@
 * [ ] Footer bar infos
 * [ ] File View Buffering
 * [ ] Retina Thumbnails
-* [ ] Charset Encoding bug
+* [X] Charset Encoding bug
+* [X] Text Selection

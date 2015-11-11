@@ -7,6 +7,7 @@
   padding-top: 5px;
   height: 100%;
   overflow-y: overlay;
+  -webkit-user-select: all;
 }
 
 .note-container .note {
@@ -20,6 +21,11 @@
   font-weight: 300;
   font-size: 14px;
   color: #333;
+}
+
+.note-container .note * {
+  -webkit-user-select: all;
+  cursor: text;
 }
 
 .ace_editor { height: 100%; }
