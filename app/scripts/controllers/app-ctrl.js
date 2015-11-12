@@ -116,6 +116,7 @@ angular.module('codexApp.index', [])
     var Menu = remote.require('menu');
     var MenuItem = remote.require('menu-item');
     var currentWindow = remote.getCurrentWindow();
+    var clipboard = require('clipboard');
 
     $scope.fileContextMenu = function (file) {
       var menu = new Menu();
@@ -124,6 +125,11 @@ angular.module('codexApp.index', [])
       } }));
       menu.append(new MenuItem({ label: 'Edit File', click: function () {
         $scope.editFile(file);
+      } }));
+      menu.append(new MenuItem({ label: 'Copy File URL', click: function () {
+        var url = file.path;
+        console.log("-> Copying URL to clipboard " + url);
+        clipboard.writeText(url);
       } }));
       menu.popup(currentWindow);
     }

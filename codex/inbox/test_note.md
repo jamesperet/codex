@@ -17,10 +17,8 @@ This is a quick review of the markdown syntax.
 #### H4
 ##### H5
 ```
-    
-## Lists
 
-#### Unordered List
+## Unordered List
 
 * Unordered list item 1
 * Unordered list item 2
@@ -32,7 +30,7 @@ This is a quick review of the markdown syntax.
 * Unordered list item 3
 ```
 
-#### Ordered List
+## Ordered List
 
 1. Ordered list item
 2. Ordered list item
@@ -57,3 +55,19 @@ This is a code block
 | header 1  | header 2  | header 3  |
 |-----------|-----------|-----------|
 | content 1 | content 2 | content 3 |
+| content 4 | content 5 | content 6 |
+
+```
+| header 1  | header 2  | header 3  |
+|-----------|-----------|-----------|
+| content 1 | content 2 | content 3 |
+| content 4 | content 5 | content 6 |
+```
+
+## Line Break
+
+---
+
+```
+---
+```

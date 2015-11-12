@@ -64,18 +64,13 @@ angular.module('codexApp.noteView', [])
               open(e.srcElement.outerHTML.match(/href="([^"]*)/)[1]);
             }
             if(e.srcElement.protocol == "file:"){
-              var current_note = FileService.getCurrentNote().path;
-              var relative_path = e.srcElement.outerHTML.match(/href="([^"]*)/)[1];
-              var fixed_url = $scope.fixRelativeURL(current_note, relative_path);
-
-              var note = FileService.getNote(fixed_url);
+              var url = e.srcElement.outerHTML.match(/href="([^"]*)/)[1];
+              var note = FileService.getNote(url);
               FileService.setCurrentNote(note);
               $scope.note = note;
               console.log("-> Opening Link: " + note.path)
               $scope.loadNoteView();
             }
-
-
         }
         function updateContent() {
             // Do something with `this.responseText`

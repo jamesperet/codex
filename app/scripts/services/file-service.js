@@ -297,7 +297,7 @@ angular.module('codexApp')
       root_path_count = root_path_count + 1;
     }
     var count = current_path_count - root_path_count;
-    console.log(current_path_count + " - " + root_path_count + " = " + count);
+    //console.log(current_path_count + " - " + root_path_count + " = " + count);
 
     //dif = current_path_count - (absolute_path_count -1);
     for (var i = 0; i < count; i++) {
@@ -305,7 +305,7 @@ angular.module('codexApp')
     }
     // make the relative path a string again
     var relative_path = absolute_path.join('/');
-    console.log("* Converted relative URL: " + relative_path)
+    //console.log("* Converted relative URL: " + relative_path)
     return relative_path;
   }
 
