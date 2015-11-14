@@ -27,6 +27,7 @@
     "jquery": "~2.1.4",
     "angular-highlightjs": "~0.4.3",
     "angular-isotope": "~0.1.14",
-    "isotope": "~2.2.2"
+    "isotope": "~2.2.2",
+    "shufflejs": "~3.1.1"
   }
 }

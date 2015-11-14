@@ -8,33 +8,36 @@
  * Controller of the domainManagerApp
  */
 angular.module('codexApp.index', [])
-  .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', 'FileService', 'PrefsService', function ($scope,  $rootScope, $state, $location, FileService, PrefsService) {
+  .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', 'FileService', 'PrefsService', '$timeout', function ($scope,  $rootScope, $state, $location, FileService, PrefsService, $timeout) {
 
     $scope.setView = function() {
       $scope.view = PrefsService.getCurrentView();
-      switch ($scope.view) {
-        case "All Notes":
-          $scope.files = FileService.getAllNotes();
-          var info = $scope.files.length + " Notes"
-          $rootScope.$broadcast('footer:info', info);
-          break;
-        case "All Files":
-          $scope.files = FileService.getAllFiles();
-          var info = $scope.files.length + " Files"
-          $rootScope.$broadcast('footer:info', info);
-          break;
-        case "Notebooks":
-          $scope.current_folder = FileService.getNotesDir();
-          $scope.files = FileService.getFolders();
-          var info = $scope.files.length + " Notebooks"
-          $rootScope.$broadcast('footer:info', info);
-          break;
-        case "Notebook":
-          $scope.files = FileService.getFiles($scope.current_folder);
-          var info = $scope.files.length + " Items"
-          $rootScope.$broadcast('footer:info', info);
-          break;
-      }
+      $scope.files = [];
+      $timeout(function() {
+        switch ($scope.view) {
+          case "All Notes":
+            $scope.files = FileService.getAllNotes();
+            var info = $scope.files.length + " Notes"
+            $rootScope.$broadcast('footer:info', info);
+            break;
+          case "All Files":
+            $scope.files = FileService.getAllFiles();
+            var info = $scope.files.length + " Files"
+            $rootScope.$broadcast('footer:info', info);
+            break;
+          case "Notebooks":
+            $scope.current_folder = FileService.getNotesDir();
+            $scope.files = FileService.getFolders();
+            var info = $scope.files.length + " Notebooks"
+            $rootScope.$broadcast('footer:info', info);
+            break;
+          case "Notebook":
+            $scope.files = FileService.getFiles($scope.current_folder);
+            var info = $scope.files.length + " Items"
+            $rootScope.$broadcast('footer:info', info);
+            break;
+        }
+      }, 1);
     }
 
     $scope.setView();
