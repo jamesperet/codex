@@ -14,6 +14,7 @@ angular
     'ui.ace',
     'codexApp.index',
     'codexApp.header',
+    'codexApp.footer',
     'codexApp.sidebar',
     'codexApp.noteView',
     'codexApp.noteEdit',

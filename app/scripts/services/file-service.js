@@ -361,7 +361,7 @@ angular.module('codexApp')
           results.push(SetFileInfo( undefined, root, file_path, stat));
         }
     });
-    console.log(results);
+    //console.log(results);
     return results;
   }
 

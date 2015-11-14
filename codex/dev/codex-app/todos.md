@@ -24,8 +24,8 @@
 * [X] Preferences Panel
 * [ ] Welcome Panel
 * [ ] New file Dialog
-* [ ] Right Click Menus
-* [ ] Copy Note link
+* [X] Right Click Menus
+* [X] Copy Note link
 * [ ] S3 Backup
 * [ ] Web Clipper
 * [ ] Multiple source folders

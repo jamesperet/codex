@@ -25,6 +25,7 @@
     <script src="scripts/codex-app.js"></script>
     <script src="scripts/controllers/app-ctrl.js"></script>
     <script src="scripts/controllers/header-ctrl.js"></script>
+    <script src="scripts/controllers/footer-ctrl.js"></script>
     <script src="scripts/controllers/sidebar-ctrl.js"></script>
     <script src="scripts/controllers/note-view-ctrl.js"></script>
     <script src="scripts/controllers/note-edit-ctrl.js"></script>
@@ -247,8 +248,8 @@
         </div>
       </div>
 
-      <footer class="toolbar toolbar-footer">
-        <h1 class="title" ng-bind="noteCount()"></h1>
+      <footer class="toolbar toolbar-footer" ng-controller="FooterCtrl">
+        <h1 class="title">{{footer_info}}</h1>
       </footer>
 
     </div>

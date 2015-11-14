@@ -15,16 +15,24 @@ angular.module('codexApp.index', [])
       switch ($scope.view) {
         case "All Notes":
           $scope.files = FileService.getAllNotes();
+          var info = $scope.files.length + " Notes"
+          $rootScope.$broadcast('footer:info', info);
           break;
         case "All Files":
           $scope.files = FileService.getAllFiles();
+          var info = $scope.files.length + " Files"
+          $rootScope.$broadcast('footer:info', info);
           break;
         case "Notebooks":
           $scope.current_folder = FileService.getNotesDir();
           $scope.files = FileService.getFolders();
+          var info = $scope.files.length + " Notebooks"
+          $rootScope.$broadcast('footer:info', info);
           break;
         case "Notebook":
           $scope.files = FileService.getFiles($scope.current_folder);
+          var info = $scope.files.length + " Items"
+          $rootScope.$broadcast('footer:info', info);
           break;
       }
     }
