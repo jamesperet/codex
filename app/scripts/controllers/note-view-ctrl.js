@@ -65,6 +65,8 @@ angular.module('codexApp.noteView', [])
             }
             if(e.srcElement.protocol == "file:"){
               var url = e.srcElement.outerHTML.match(/href="([^"]*)/)[1];
+              //url = FileService.getNotesDir() + "/" + url;
+              url = $scope.fixRelativeURL($scope.note.path, url)
               var note = FileService.getNote(url);
               FileService.setCurrentNote(note);
               $scope.note = note;
@@ -110,7 +112,6 @@ angular.module('codexApp.noteView', [])
       }
       var page_images = document.getElementsByTagName('img');
       console.log("-> Changing "+ img_urls.length + " images")
-      console.log(page_images)
       for(var i = 0; i < img_urls.length; i++) {
           console.log(page_images[i]);
           page_images[i].src = img_urls[i];
