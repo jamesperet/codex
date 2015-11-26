@@ -32,7 +32,8 @@ angular.module('codexApp.index', [])
             $rootScope.$broadcast('footer:info', info);
             break;
           case "Notebook":
-            $scope.files = FileService.getFiles($scope.current_folder);
+            $scope.files = FileService.getFiles(FileService.getCurrentNote().path);
+
             var info = $scope.files.length + " Items"
             $rootScope.$broadcast('footer:info', info);
             break;
@@ -58,6 +59,7 @@ angular.module('codexApp.index', [])
           break;
         case "Folder":
           $scope.current_folder = file.path;
+          FileService.setCurrentNote(file)
           PrefsService.setCurrentView("Notebook");
           $scope.setView();
           break;
@@ -103,11 +105,11 @@ angular.module('codexApp.index', [])
     $scope.itemSpacing = function(){
       //var html_items = document.getElementsByClassName("file-view-item");
       //var items = [].slice.call(html_items);
-      var items = HTMLNodesToArray('grid', 'li');
-      for (var i = 0; i < items.length; i++) {
-        items[i].style.margin = "55px";
-        console.log(item[i]);
-      }
+      // var items = HTMLNodesToArray('grid', 'li');
+      // for (var i = 0; i < items.length; i++) {
+      //   items[i].style.margin = "55px";
+      //   console.log(item[i]);
+      // }
     }
 
     $scope.isImage = function(file_type) {

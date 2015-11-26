@@ -50,7 +50,7 @@ angular.module('codexApp.header', [])
       $rootScope.$broadcast('window-view:change');
       FileService.goToPreviousNote();
       $rootScope.$broadcast('note-view:reload');
-      $state.go("note-view");
+      FileService.changeController();
     }
 
     // Go to the next note
@@ -58,7 +58,7 @@ angular.module('codexApp.header', [])
       $rootScope.$broadcast('window-view:change');
       FileService.goToNextNote();
       $rootScope.$broadcast('note-view:reload');
-      $state.go("note-view");
+      FileService.changeController();
     }
 
     // Note View active button

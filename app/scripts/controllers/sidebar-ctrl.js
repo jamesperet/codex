@@ -8,7 +8,7 @@
  * Controller of the domainManagerApp
  */
 angular.module('codexApp.sidebar', [])
-  .controller('SidebarCtrl',['$scope', '$rootScope', '$state', 'PrefsService', function ($scope,  $rootScope, $state, PrefsService) {
+  .controller('SidebarCtrl',['$scope', '$rootScope', '$state', 'PrefsService', "FileService", function ($scope,  $rootScope, $state, PrefsService, FileService) {
 
     console.log('-> Sidebar loaded')
 
@@ -31,6 +31,7 @@ angular.module('codexApp.sidebar', [])
     }
 
     $scope.goToNotebooks = function() {
+      FileService.setCurrentNote(FileService.getNote(FileService.getNotesDir()));
       PrefsService.setCurrentView("Notebooks");
       $scope.activateSidebarBtn(2);
       $rootScope.$broadcast('main-window:file-list');

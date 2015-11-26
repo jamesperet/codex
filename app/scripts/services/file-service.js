@@ -1,5 +1,5 @@
 angular.module('codexApp')
-.service('FileService', [ '$rootScope', '$http', 'ThumbnailService',  function($rootScope, $http, ThumbnailService) {
+.service('FileService', [ '$rootScope', '$http', 'ThumbnailService', '$state',  function($rootScope, $http, ThumbnailService, $state) {
 
   var notes_dir = "/Users/james/dev/codex/codex";
   var default_notes_dir = "/Users/james/dev/codex/codex/inbox";
@@ -443,6 +443,7 @@ angular.module('codexApp')
       note_history_index = note_history_index - 1;
       current_note = note_history[note_history_index];
     }
+    console.log(current_note);
   }
 
   this.goToNextNote = function(){
@@ -462,6 +463,17 @@ angular.module('codexApp')
 
   this.getDefaultNote = function() {
     return getNote(default_home_note);
+  }
+
+  this.changeController = function(){
+    switch (current_note.type) {
+      case "Markdown":
+        $state.go("note-view");
+        break;
+      case "Folder":
+        $state.go("index");
+        break;
+    }
   }
 
 }])
