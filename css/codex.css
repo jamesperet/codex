@@ -101,7 +101,7 @@ code {
   padding-top: 10px;
 }
 
-.file-view ul li {
+.file-view-item {
   list-style: none;
   padding: 10px;
   margin: 10px;

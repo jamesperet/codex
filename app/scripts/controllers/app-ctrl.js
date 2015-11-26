@@ -78,10 +78,10 @@ angular.module('codexApp.index', [])
     $rootScope.$on('file-service:files-loaded', function(){
       if(!$scope.$$phase) {
           $scope.$apply(function(){
-            //$scope.itemSpacing();
+            $scope.itemSpacing();
           });
         } else {
-            //$scope.itemSpacing();
+            $scope.itemSpacing();
         }
     })
 
@@ -101,9 +101,12 @@ angular.module('codexApp.index', [])
     })
 
     $scope.itemSpacing = function(){
-      var items = document.getElementsByClassName("file-view-item");
+      //var html_items = document.getElementsByClassName("file-view-item");
+      //var items = [].slice.call(html_items);
+      var items = HTMLNodesToArray('grid', 'li');
       for (var i = 0; i < items.length; i++) {
-        items[i].style.margin = "15px";
+        items[i].style.margin = "55px";
+        console.log(item[i]);
       }
     }
 
@@ -144,4 +147,27 @@ angular.module('codexApp.index', [])
       } }));
       menu.popup(currentWindow);
     }
+
+    var HTMLNodesToArray = function (reference, elems) {
+        reference = document.getElementById(reference);
+        console.log(reference);
+        //elems = elems || '*';
+        //var nodes = [];
+        //var elements = reference.getElementsByClassName(elems);
+        var elements = angular.element(document.querySelector( '.file-view-item' ));
+        console.log(elements);
+        // var i;
+        // nodes = Array.prototype.slice.call(elements);
+        // console.log( Array.isArray(elements))
+        // console.log( Array.isArray(nodes))
+        // console.log(nodes)
+        // var len = elements.length;
+        // console.log(len)
+        // for(i = 0; i< len; i += 1) {
+        //     var node = elements[i];
+        //     nodes.push(node);
+        // }
+        return elements;
+    }
+
   }]);

@@ -9,6 +9,12 @@ Links, snipets and references for the Codex App.
 * [Mansonary](http://masonry.desandro.com/) - Cascading grid layout library
 * [Wavesurfer.js](http://wavesurfer-js.org/) - Web Audio Waveform Visualizer
 * [Cheerio](https://github.com/cheeriojs/cheerio) - Fast, flexible, and lean implementation of core jQuery designed specifically for the server
+* [angular-inview](https://github.com/thenikso/angular-inview) - AngularJS directive to check if a DOM element is in the browser viewport.
+
+## Reading
+
+* [How do Promises Work?](http://robotlolita.me/2015/11/15/how-do-promises-work.html)
+* [From Karma to Mocha, with a taste of jsdom](https://medium.com/podio-engineering-blog/from-karma-to-mocha-with-a-taste-of-jsdom-c9c703a06b21#.3gy10vj6i)
 
 ## List folder and files
 
