@@ -147,6 +147,20 @@ angular.module('codexApp.index', [])
         console.log("-> Copying URL to clipboard " + url);
         clipboard.writeText(url);
       } }));
+      menu.append(new MenuItem({ label: 'Delete', click: function () {
+        if(FileService.deleteFile(file.path)){
+          var index = $scope.files.indexOf(file);
+          if (index > -1) {
+            if(!$scope.$$phase) {
+              $scope.$apply(function(){
+                $scope.files.splice(index, 1);
+              });
+            } else {
+                $scope.files.splice(index, 1);
+            }
+          }
+        };
+      } }));
       menu.popup(currentWindow);
     }
 

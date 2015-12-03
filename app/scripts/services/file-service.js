@@ -392,6 +392,13 @@ angular.module('codexApp')
     return filtered;
   }
 
+  var deleteFile = function(file){
+    var fs = require('fs');
+    fs.unlinkSync(file);
+    console.log('-> Successfully Deleted ' + file);
+    return true;
+  }
+
 
 
   // RESPONSE
@@ -474,6 +481,10 @@ angular.module('codexApp')
         $state.go("index");
         break;
     }
+  }
+
+  this.deleteFile = function(file) {
+    return deleteFile(file);
   }
 
 }])
