@@ -151,6 +151,11 @@ code.hljs .hljs-title {
   margin-right: 6px;
 }
 
+.hljs-number, .hljs-preprocessor, .hljs-pragma, .hljs-built_in, .hljs-literal, .hljs-params, .hljs-constant {
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
 .icon-tabs {
     margin: 0px;
     margin-left: -34px;

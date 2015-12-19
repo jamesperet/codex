@@ -14,3 +14,9 @@
 * [Notes](dev/codex-app/notes.md) 
 * [Highlight JS](dev/codex-app/highlightjs.md)
 * [Encryption](dev/codex-app/Encryption.md)
+
+## Trip
+
+* [Planning](Notes/Trip 2016/planning.md) ⭐
+* [Job Search](Notes/Job Search/index.md)
+* [J1X Server](inbox/j1x-server.md)

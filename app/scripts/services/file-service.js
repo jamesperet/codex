@@ -1,7 +1,40 @@
 angular.module('codexApp')
 .service('FileService', [ '$rootScope', '$http', 'ThumbnailService', '$state',  function($rootScope, $http, ThumbnailService, $state) {
 
-  var notes_dir = "/Users/james/dev/codex/codex";
+  var getAppData = function(){
+    var remote = require('remote');
+    var app = remote.require('app');
+    var appDataPath = app.getPath("userData");
+    var defaultUserContentPath = app.getPath("home") + "/Documents";
+    findOrGenerateUserDataFile(appDataPath, defaultUserContentPath);
+    var raw_data = fs.readFileSync(appDataPath + '/userData.json', 'utf8');
+    var data = JSON.parse(raw_data);
+    console.log(data);
+    return data
+  }
+
+  var findOrGenerateUserDataFile = function(path, defaultUserContentPath) {
+    var generate_settings = true;
+    fs = require('fs')
+    fs.readdirSync(path).forEach(function(file) {
+      if(file == "UserData.json"){
+        console.log("-> Loading Settings");
+        generate_settings = false;
+      }
+    });
+    if (generate_settings){
+      // Generate file
+      file_path = path + "/UserData.json";
+      console.log("-> Generating user settings file: '" + file_path + "'");
+      var content = '{ "UserDataDirectory" : "' + defaultUserContentPath +'" }';
+      fs.writeFileSync(file_path, content, 'utf8');
+      return true;
+    }
+  }
+
+  var appData = getAppData();
+
+  var notes_dir = appData.UserDataDirectory;
   var default_notes_dir = "/Users/james/dev/codex/codex/inbox";
   var default_home_note = "/Users/james/dev/codex/codex/index.md"
   var notes = [];

@@ -10,6 +10,7 @@ Links, snipets and references for the Codex App.
 * [Wavesurfer.js](http://wavesurfer-js.org/) - Web Audio Waveform Visualizer
 * [Cheerio](https://github.com/cheeriojs/cheerio) - Fast, flexible, and lean implementation of core jQuery designed specifically for the server
 * [angular-inview](https://github.com/thenikso/angular-inview) - AngularJS directive to check if a DOM element is in the browser viewport.
+* [ShareJS](https://github.com/share/ShareJS) - Collaborative editing in any app
 
 ## Reading
 
