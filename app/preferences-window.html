@@ -2,46 +2,47 @@
 <html  class="no-js">
 
   <head>
-    <title>Codex</title>
+    <title>Codex Preferences</title>
     <meta charset="UTF-8">
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../css/tomorrow-night-eighties.css">
     <link rel="stylesheet" href="../css/photon.min.css">
     <link rel="stylesheet" href="../css/codex.css">
 
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+
+    <script src="scripts/preferences.js"></script>
+    <script src="scripts/controllers/general-prefs-ctrl.js"></script>
+    <script src="scripts/controllers/databases-prefs-ctrl.js"></script>
+    <script src="scripts/controllers/prefs-nav-ctrl.js"></script>
+    <script src="scripts/services/file-service.js"></script>
+    <script src="scripts/services/thumbnail-service.js"></script>
+    <script src="scripts/services/prefs-service.js"></script>
+
     <script>
       var remote = require('remote');
       var ipc = require('ipc');
       var dialog = remote.require('dialog');
+      console.log("-> Opening Preferences Window")
     </script>
   </head>
 
-  <body>
+  <body ng-app="codexApp">
     <header class="toolbar toolbar-header">
       <h1 class="title">Preferences</h1>
 
-      <ul class="icon-tabs">
-        <li class="active">
+      <ul class="icon-tabs" ng-controller="PrefsNavCtrl">
+        <li ng-class="links[0]" ng-click="goToGeneral()">
           <img src="content/imgs/prefs-icon.png" style="width: 32px; height: 32px;"><br>General
         </li>
-        <li>
+        <li ng-class="links[1]" ng-click="goToDatabases()">
           <img src="content/imgs/db-icon.png" style="width: 32px; height: 32px;"><br>Databases
         </li>
       </ul>
     </header>
-    <div class="well">
-      <p>Default View when opening the app:<br>
-      <select class="form-control" style="width: 220px;">
-        <option>All Notes</option>
-        <option>All Files</option>
-        <option>Index note</option>
-      </select></p>
-      <p>Default Notebook:
-      <select class="form-control" style="width: 220px;">
-        <option>Notebook 1</option>
-        <option>Notebook 2</option>
-        <option>Notebook 3</option>
-      </select></p>
+    <div ui-view class="well">
 
     </div>
   </body>

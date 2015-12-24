@@ -1,15 +1,21 @@
 angular.module('codexApp')
 .service('FileService', [ '$rootScope', '$http', 'ThumbnailService', '$state',  function($rootScope, $http, ThumbnailService, $state) {
 
+  var defaultUserContentPath = "";
+  var appDataPath = "";
+  var appData = {};
+  var notes_dir = "";
+
   var getAppData = function(){
     var remote = require('remote');
     var app = remote.require('app');
-    var appDataPath = app.getPath("userData");
-    var defaultUserContentPath = app.getPath("home") + "/Documents";
+    appDataPath = app.getPath("userData");
+    defaultUserContentPath = app.getPath("home") + "/Documents/codex";
     findOrGenerateUserDataFile(appDataPath, defaultUserContentPath);
     var raw_data = fs.readFileSync(appDataPath + '/userData.json', 'utf8');
     var data = JSON.parse(raw_data);
-    console.log(data);
+    appData = data;
+    notes_dir = appData.UserDataDirectory;
     return data
   }
 
@@ -27,14 +33,31 @@ angular.module('codexApp')
       file_path = path + "/UserData.json";
       console.log("-> Generating user settings file: '" + file_path + "'");
       var content = '{ "UserDataDirectory" : "' + defaultUserContentPath +'" }';
-      fs.writeFileSync(file_path, content, 'utf8');
+      mkdirSync(defaultUserContentPath);
+      console.log(content);
+      saveAppData(JSON.parse(content));
       return true;
     }
   }
 
-  var appData = getAppData();
+  var saveAppData = function(data) {
+    console.log("-> Saving user data...");
+    console.log(data);
+    fs.writeFileSync(appDataPath + "/UserData.json", JSON.stringify(data), 'utf8');
+  }
 
-  var notes_dir = appData.UserDataDirectory;
+  var mkdirSync = function (path) {
+    try {
+      fs.mkdirSync(path);
+    } catch(e) {
+      if ( e.code != 'EEXIST' ) throw e;
+    }
+  }
+
+  getAppData();
+  console.log("-> Loading content from folder: " + appData.UserDataDirectory);
+
+
   var default_notes_dir = "/Users/james/dev/codex/codex/inbox";
   var default_home_note = "/Users/james/dev/codex/codex/index.md"
   var notes = [];
@@ -436,18 +459,21 @@ angular.module('codexApp')
 
   // RESPONSE
   this.getAllFiles = function(dir) {
+    getAppData();
     if (typeof(dir)==='undefined') dir = notes_dir;
     notes = getAllFilesFromFolder(dir);
     return notes.sort(date_sort_asc);
   }
 
   this.getFiles = function(dir) {
+    getAppData();
     if (typeof(dir)==='undefined') dir = notes_dir;
     notes = getFilesFromFolder(dir);
     return notes.sort(date_sort_asc);
   }
 
   this.getAllNotes = function() {
+    getAppData();
     notes = getAllFilesFromFolder();
     notes = filterNotes(notes);
     return notes.sort(date_sort_asc);
@@ -491,6 +517,12 @@ angular.module('codexApp')
       note_history_index = note_history_index + 1;
       current_note = note_history[note_history_index];
     }
+  }
+
+  this.setNotesDir = function(dir) {
+    appData.UserDataDirectory = dir[0];
+    saveAppData(appData);
+    notes_dir = dir[0];
   }
 
   this.getNotesDir = function() {
