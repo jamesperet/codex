@@ -1,8 +1,8 @@
 {
-  "name": "proton-template-app",
+  "name": "codex-app",
   "productName": "Codex",
   "version": "0.0.1",
-  "description": "A simple template app for Proton",
+  "description": "Mac markdown wiki app",
   "repository": "jamesperet/codex",
   "author": {
     "name": "James Peret",
