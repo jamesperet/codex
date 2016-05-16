@@ -8,7 +8,7 @@
  * Controller of the domainManagerApp
  */
 angular.module('codexApp.noteEdit', [])
-  .controller('NoteEditCtrl',['$scope', '$rootScope', '$state', 'FileService', function ($scope,  $rootScope, $state, FileService) {
+  .controller('NoteEditCtrl',['$scope', '$rootScope', '$state', '$timeout', 'FileService', function ($scope,  $rootScope, $state, $timeout, FileService) {
 
     $scope.note = FileService.getCurrentNote();
     console.log('-> Editing File: ' + $scope.note.path)

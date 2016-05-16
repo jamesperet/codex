@@ -44,6 +44,7 @@ angular.module('codexApp')
     console.log("-> Saving user data...");
     console.log(data);
     fs.writeFileSync(appDataPath + "/UserData.json", JSON.stringify(data), 'utf8');
+    appData = data;
   }
 
   var mkdirSync = function (path) {
@@ -133,12 +134,42 @@ angular.module('codexApp')
 
   var getThumbnail = function(file_path) {
     var type = getFileType(file_path);
+    var thumbs = appData.thumbs
     switch (type) {
       case "Markdown":
-        return ThumbnailService.createNoteThumbnail(file_path);
+        var thumb = ""
+        for (var i=0; i < thumbs.length; i++) {
+          if (thumbs[i].file === file_path) {
+              thumb = thumbs[i].path;
+              break;
+          }
+        }
+        console.log(thumb);
+        if(thumb == "" || thumb == undefined){
+          console.log("> NO THUMBNAIL FOUND! GENERATING NEW ONE")
+          thumb = saveThumbnail(file_path);
+        }
+        return thumb
       default:
         return "";
     }
+  }
+
+  var saveThumbnail = function(file_path){
+    for (var i=0; i < appData.thumbs.length; i++) {
+      if (appData.thumbs[i].file === file_path) {
+          var fs = require("fs");
+          fs.unlink(appData.thumbs[i].path);
+          appData.thumbs.splice(i)
+          break;
+      }
+    }
+    thumb = ThumbnailService.createNoteThumbnail(file_path, appDataPath);
+    obj = { "file" : file_path, "path" : thumb }
+    appData.thumbs.push(obj)
+    saveAppData(appData)
+    console.log("> Saving thumbnail: " + thumb )
+    return thumb
   }
 
   var isValidFile = function(file) {
@@ -280,6 +311,7 @@ angular.module('codexApp')
             console.log(err);
         } else {
           console.log("-> FILE SAVED: " + file_path);
+          saveThumbnail(file_path)
         }
     });
   }
@@ -550,6 +582,14 @@ angular.module('codexApp')
 
   this.deleteFile = function(file) {
     return deleteFile(file);
+  }
+
+  this.getAppDataPath = function() {
+    return appDataPath;
+  }
+
+  this.saveThumbnail = function(file_path){
+    return saveThumbnail(file_path);
   }
 
 }])

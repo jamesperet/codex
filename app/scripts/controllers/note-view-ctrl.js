@@ -48,9 +48,7 @@ angular.module('codexApp.noteView', [])
         var a = document.getElementsByTagName('a'), ajax;
         for (var i=0; i<a.length; ++i) {
            a[i].addEventListener('click', handleAnchor, false);
-           console.log(a[i].toString());
            var parts = $scope.getUrlParts(a[i].toString())
-           console.log(parts.protocol)
            if(parts.protocol == "file:"){
              a[i].className += "internal-link";
            }
