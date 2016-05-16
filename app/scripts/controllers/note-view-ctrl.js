@@ -48,6 +48,12 @@ angular.module('codexApp.noteView', [])
         var a = document.getElementsByTagName('a'), ajax;
         for (var i=0; i<a.length; ++i) {
            a[i].addEventListener('click', handleAnchor, false);
+           console.log(a[i].toString());
+           var parts = $scope.getUrlParts(a[i].toString())
+           console.log(parts.protocol)
+           if(parts.protocol == "file:"){
+             a[i].className += "internal-link";
+           }
         }
 
         // Syntax Highlight
@@ -58,7 +64,7 @@ angular.module('codexApp.noteView', [])
         function handleAnchor(e){
             e.preventDefault();
             var r = new RegExp('^(?:[a-z]+:)?//', 'i');
-            if(e.srcElement.protocol == "http:"){
+            if(e.srcElement.protocol == "http:" || e.srcElement.protocol == "https:"){
               console.log("-> Prevented link from opening: " + e.srcElement.outerHTML.match(/href="([^"]*)/)[1]);
               var open = require("open");
               open(e.srcElement.outerHTML.match(/href="([^"]*)/)[1]);

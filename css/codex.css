@@ -78,6 +78,14 @@ code {
   border-radius: 6px;
 }
 
+.internal-link {
+  color: #2196F3;
+}
+
+a {
+  color: #3F51B5;
+}
+
 
 /* File View */
 

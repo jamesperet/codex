@@ -1,22 +1,25 @@
 # Index
 
+## Projects
+
+- [codex](dev/codex-app/index.md) ⭐
+- [artpimp](inbox/artpimp-notes.md) ⭐
+- [Beta Bot](dev/betabot/betabot.md) ⭐
+- [Star Trek Ebook](inbox/star-trek-ebook.md)
+- [Radio Transmitter](inbox/radio-transmitter.md)
+- [kalinkaprates.com](inbox/kalinkaprates-website.md)
+
 ## Research
 
+* [Programming](Research/programming/index.md)
 * [Chem Lights](Research/ChemLights/index.md)
 * [The Press Kit is Dead - Use this instead](Research/startups/The Press Kit is Dead - Use this instead.md)
 * [Markdown Syntax](inbox/test_note.md)
 * [Test Note 0001](Test-Stack/Notebook 2/Test-0001/index.md)
-* [Raspberry Pi Getting Started Guide](Research/Raspberry-Pi/index.md)
 
-## Codex Dev
+## Notes
 
-* [Todo's](dev/codex-app/todos.md)
-* [Notes](dev/codex-app/notes.md) 
-* [Highlight JS](dev/codex-app/highlightjs.md)
-* [Encryption](dev/codex-app/Encryption.md)
-
-## Trip
-
+* [German VISA](inbox/german_visa.md)
 * [Planning](Notes/Trip 2016/planning.md) ⭐
 * [Job Search](Notes/Job Search/index.md)
 * [J1X Server](inbox/j1x-server.md)
