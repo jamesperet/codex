@@ -5,6 +5,7 @@ angular.module('codexApp')
   var appDataPath = "";
   var appData = {};
   var notes_dir = "";
+  var searched_files = [];
 
   var getAppData = function(){
     var remote = require('remote');
@@ -144,7 +145,7 @@ angular.module('codexApp')
               break;
           }
         }
-        console.log(thumb);
+        //console.log(thumb);
         if(thumb == "" || thumb == undefined){
           console.log("> NO THUMBNAIL FOUND! GENERATING NEW ONE")
           thumb = saveThumbnail(file_path);
@@ -590,6 +591,14 @@ angular.module('codexApp')
 
   this.saveThumbnail = function(file_path){
     return saveThumbnail(file_path);
+  }
+
+  this.setSearchedFiles = function(files){
+    searched_files = files;
+  }
+
+  this.getSearchFiles = function() {
+    return searched_files;
   }
 
 }])

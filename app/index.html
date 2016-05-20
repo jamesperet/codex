@@ -31,10 +31,12 @@
     <script src="scripts/controllers/note-view-ctrl.js"></script>
     <script src="scripts/controllers/note-edit-ctrl.js"></script>
     <script src="scripts/services/file-service.js"></script>
+    <script src="scripts/services/search-service.js"></script>
     <script src="scripts/services/thumbnail-service.js"></script>
     <script src="scripts/services/prefs-service.js"></script>
     <script src="scripts/services/date-formatter.js" charset="utf-8"></script>
     <script src="scripts/directives/right-click-directive.js"></script>
+    <script src="scripts/directives/ng-enter.js"></script>
 
 
 
@@ -216,6 +218,14 @@
             <button class="btn btn-default" ng-class="noteViewBtnClass" ng-click="activateNoteView()">
               <span class="icon icon-eye"></span>
             </button>
+          </div>
+
+          <div class="btn-group pull-right">
+            <form>
+              <div class="form-group">
+                <input type="text" ng-model="search_text" ng-enter="fileSearch()" class="form-control" placeholder="Search" style="height: 24px;">
+              </div>
+            </form>
           </div>
 
         </div>

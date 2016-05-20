@@ -33,7 +33,11 @@ angular.module('codexApp.index', [])
             break;
           case "Notebook":
             $scope.files = FileService.getFiles(FileService.getCurrentNote().path);
-
+            var info = $scope.files.length + " Items"
+            $rootScope.$broadcast('footer:info', info);
+            break;
+          case "Searched Files":
+            $scope.files = FileService.getSearchFiles();
             var info = $scope.files.length + " Items"
             $rootScope.$broadcast('footer:info', info);
             break;

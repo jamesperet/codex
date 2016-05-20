@@ -23,6 +23,7 @@
   ],
   "dependencies": {
     "electron-debug": "^0.2.1",
+    "full-text-search-light": "0.0.16",
     "marked": "^0.3.5"
   },
   "devDependencies": {

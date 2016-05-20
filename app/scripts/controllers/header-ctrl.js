@@ -8,7 +8,7 @@
  * Controller of the domainManagerApp
  */
 angular.module('codexApp.header', [])
-  .controller('HeaderCtrl',['$scope', '$rootScope', '$state', 'FileService', function ($scope,  $rootScope, $state, FileService) {
+  .controller('HeaderCtrl',['$scope', '$rootScope', '$state', 'FileService', 'SearchService', 'PrefsService', function ($scope,  $rootScope, $state, FileService, SearchService, PrefsService) {
 
     console.log('-> Header loaded')
 
@@ -112,5 +112,19 @@ angular.module('codexApp.header', [])
         $scope.noteEditBtnClass = "active";
       }
     });
+
+    // Search Functions
+
+    SearchService.init();
+    $scope.fileSearch = function(){
+      console.log("> SEARCHING: " + $scope.search_text);
+      var results = SearchService.search($scope.search_text);
+      FileService.setSearchedFiles(results);
+      PrefsService.setCurrentView("Searched Files");
+      //$scope.activateSidebarBtn(0);
+      $rootScope.$broadcast('main-window:note-list');
+      $rootScope.$broadcast('window-view:change');
+      $state.go("index");
+    }
 
   }]);
