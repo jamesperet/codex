@@ -47,18 +47,13 @@ angular.module('codexApp.header', [])
 
     // Go to the precious note
     $scope.goBack = function() {
-      $rootScope.$broadcast('window-view:change');
       FileService.goToPreviousNote();
-      $rootScope.$broadcast('note-view:reload');
-      FileService.changeController();
+
     }
 
     // Go to the next note
     $scope.goForward = function() {
-      $rootScope.$broadcast('window-view:change');
       FileService.goToNextNote();
-      $rootScope.$broadcast('note-view:reload');
-      FileService.changeController();
     }
 
     // Note View active button
@@ -120,6 +115,13 @@ angular.module('codexApp.header', [])
       console.log("> SEARCHING: " + $scope.search_text);
       var results = SearchService.search($scope.search_text);
       FileService.setSearchedFiles(results);
+      var current_note = {
+        path : "search",
+        type : "Folder",
+        title: $scope.search_text,
+        search_results: results
+      }
+      FileService.setCurrentNote(current_note)
       PrefsService.setCurrentView("Searched Files");
       //$scope.activateSidebarBtn(0);
       $rootScope.$broadcast('main-window:note-list');

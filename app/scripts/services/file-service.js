@@ -1,5 +1,5 @@
 angular.module('codexApp')
-.service('FileService', [ '$rootScope', '$http', 'ThumbnailService', '$state',  function($rootScope, $http, ThumbnailService, $state) {
+.service('FileService', [ '$rootScope', '$http', 'ThumbnailService', '$state', 'PrefsService',  function($rootScope, $http, ThumbnailService, $state , PrefsService) {
 
   var defaultUserContentPath = "";
   var appDataPath = "";
@@ -541,6 +541,11 @@ angular.module('codexApp')
     if(note_history_index > 0) {
       note_history_index = note_history_index - 1;
       current_note = note_history[note_history_index];
+      if(current_note.path == "search"  || current_note.path == undefined){
+        changeController();
+      }
+      $rootScope.$broadcast('window-view:change');
+      $rootScope.$broadcast('note-view:reload');
     }
     console.log(current_note);
   }
@@ -549,6 +554,11 @@ angular.module('codexApp')
     if(note_history_index < (note_history.length - 1)){
       note_history_index = note_history_index + 1;
       current_note = note_history[note_history_index];
+      if(current_note.path == "search" || current_note.path == undefined){
+        changeController();
+      }
+      $rootScope.$broadcast('window-view:change');
+      $rootScope.$broadcast('note-view:reload');
     }
   }
 
@@ -570,7 +580,11 @@ angular.module('codexApp')
     return getNote(default_home_note);
   }
 
-  this.changeController = function(){
+  var changeController = function(){
+    console.log(current_note)
+    if(current_note.search_results){
+      searched_files = current_note.search_results;
+    }
     switch (current_note.type) {
       case "Markdown":
         $state.go("note-view");
@@ -578,7 +592,15 @@ angular.module('codexApp')
       case "Folder":
         $state.go("index");
         break;
+      case "All Notes":
+        PrefsService.setCurrentView("All Notes");
+        $state.go("index");
+        break;
     }
+  }
+
+  this.changeController = function() {
+    changeController();
   }
 
   this.deleteFile = function(file) {

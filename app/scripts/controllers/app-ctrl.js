@@ -16,6 +16,10 @@ angular.module('codexApp.index', [])
       $timeout(function() {
         switch ($scope.view) {
           case "All Notes":
+            var note = {
+              type : "All Notes"
+            }
+            FileService.setCurrentNote(note);
             $scope.files = FileService.getAllNotes();
             var info = $scope.files.length + " Notes"
             $rootScope.$broadcast('footer:info', info);
