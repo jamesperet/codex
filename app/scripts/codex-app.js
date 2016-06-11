@@ -18,6 +18,7 @@ angular
     'codexApp.sidebar',
     'codexApp.noteView',
     'codexApp.noteEdit',
+    'codexApp.imageView',
     'hljs'
   ])
 
@@ -53,6 +54,11 @@ angular
       url: "/note-edit",
       templateUrl: "views/note-edit.html",
       controller: 'NoteEditCtrl'
+    })
+    .state('image-view', {
+      url: "/image-view",
+      templateUrl: "views/image-view.html",
+      controller: 'ImageViewCtrl'
     })
     $urlRouterProvider.otherwise("/");
 

@@ -534,7 +534,7 @@ angular.module('codexApp')
     note_history.push(current_note);
     note_history_index = note_history.length -1;
 
-    //console.log(current_note);
+    console.log(current_note);
     //console.log("Current_note: " + current_note.title)
   }
 
@@ -542,9 +542,7 @@ angular.module('codexApp')
     if(note_history_index > 0) {
       note_history_index = note_history_index - 1;
       current_note = note_history[note_history_index];
-      if(current_note.path == "search"  || current_note.path == undefined){
-        changeController();
-      }
+      changeController();
       $rootScope.$broadcast('window-view:change');
       $rootScope.$broadcast('note-view:reload');
     }
@@ -555,9 +553,7 @@ angular.module('codexApp')
     if(note_history_index < (note_history.length - 1)){
       note_history_index = note_history_index + 1;
       current_note = note_history[note_history_index];
-      if(current_note.path == "search" || current_note.path == undefined){
-        changeController();
-      }
+      changeController();
       $rootScope.$broadcast('window-view:change');
       $rootScope.$broadcast('note-view:reload');
     }
@@ -593,8 +589,15 @@ angular.module('codexApp')
       case "Folder":
         $state.go("index");
         break;
+      case "Image":
+        $state.go("image-view");
+        break;
       case "All Notes":
         PrefsService.setCurrentView("All Notes");
+        $state.go("index");
+        break;
+      case "All Files":
+        PrefsService.setCurrentView("All Files");
         $state.go("index");
         break;
     }

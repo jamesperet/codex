@@ -233,3 +233,11 @@ code.hljs .hljs-title {
   animation-fill-mode:forwards;
   animation-duration:0.2s;
 }
+
+.centered {
+  position: relative;;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}

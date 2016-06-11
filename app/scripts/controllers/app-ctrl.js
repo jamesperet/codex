@@ -16,15 +16,15 @@ angular.module('codexApp.index', [])
       $timeout(function() {
         switch ($scope.view) {
           case "All Notes":
-            var note = {
-              type : "All Notes"
-            }
+            var note = { type : "All Notes" }
             FileService.setCurrentNote(note);
             $scope.files = FileService.getAllNotes();
             var info = $scope.files.length + " Notes"
             $rootScope.$broadcast('footer:info', info);
             break;
           case "All Files":
+            var note = { type : "All Files" }
+            FileService.setCurrentNote(note);
             $scope.files = FileService.getAllFiles();
             var info = $scope.files.length + " Files"
             $rootScope.$broadcast('footer:info', info);
@@ -70,6 +70,11 @@ angular.module('codexApp.index', [])
           FileService.setCurrentNote(file)
           PrefsService.setCurrentView("Notebook");
           $scope.setView();
+          break;
+        case "Image":
+          FileService.setCurrentNote(file)
+          $rootScope.$broadcast('main-window:note-view');
+          $state.go("image-view");
           break;
       }
     }
