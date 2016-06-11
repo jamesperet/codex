@@ -12,10 +12,13 @@
 ## Research
 
 * [Programming](Research/programming/index.md)
+* [Dev Tools](Research/dev-tools/index.md)
 * [Chem Lights](Research/ChemLights/index.md)
 * [The Press Kit is Dead - Use this instead](Research/startups/The Press Kit is Dead - Use this instead.md)
 * [Markdown Syntax](inbox/test_note.md)
 * [Test Note 0001](Test-Stack/Notebook 2/Test-0001/index.md)
+* [Weed](research/weed/index.md)
+* [Rocketry](research/rocketry/index.md)
 
 ## Notes
 
@@ -23,3 +26,8 @@
 * [Planning](Notes/Trip 2016/planning.md) ⭐
 * [Job Search](Notes/Job Search/index.md)
 * [J1X Server](inbox/j1x-server.md)
+* [Daily Goals](inbox/daily-goals.md)
+
+## Tools
+
+* [Trello](https://trello.com/)

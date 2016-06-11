@@ -145,8 +145,9 @@ angular.module('codexApp')
               break;
           }
         }
-        //console.log(thumb);
         if(thumb == "" || thumb == undefined){
+          // [ ] Thumbnail generation queue
+          // [ ] Default thumbnail
           console.log("> NO THUMBNAIL FOUND! GENERATING NEW ONE")
           thumb = saveThumbnail(file_path);
         }

@@ -28,6 +28,10 @@
   cursor: text;
 }
 
+.note-container .note a {
+  cursor: pointer;
+}
+
 .ace_editor { height: 100%; }
 
 .editor-container {
