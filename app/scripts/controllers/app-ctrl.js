@@ -76,6 +76,8 @@ angular.module('codexApp.index', [])
           $rootScope.$broadcast('main-window:note-view');
           $state.go("image-view");
           break;
+        default:
+          break;
       }
     }
 
