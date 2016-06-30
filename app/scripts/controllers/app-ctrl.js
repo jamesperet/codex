@@ -8,25 +8,56 @@
  * Controller of the domainManagerApp
  */
 angular.module('codexApp.index', [])
-  .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', 'FileService', 'PrefsService', '$timeout', function ($scope,  $rootScope, $state, $location, FileService, PrefsService, $timeout) {
+  .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', 'FileService', 'PrefsService', '$timeout', '$location', '$anchorScroll', function ($scope,  $rootScope, $state, $location, FileService, PrefsService, $timeout, $location, $anchorScroll) {
+
+    var all_files = [];
+    var current_page = 0;
+    var page_count = 5
+    var info_count = 0;
+    var loaded = false;
+    $scope.files = [];
 
     $scope.setView = function() {
-      $scope.view = PrefsService.getCurrentView();
-      $scope.files = [];
+      $scope.view = PrefsService.getCurrentView()
+      //$scope.files = [];
       $timeout(function() {
         switch ($scope.view) {
           case "All Notes":
             var note = { type : "All Notes" }
             FileService.setCurrentNote(note);
-            $scope.files = FileService.getAllNotes();
-            var info = $scope.files.length + " Notes"
+            all_files = FileService.getAllNotes();
+            info_count = all_files.length;
+            var f = [];
+            var i = 0;
+            for (i = 0; i <= (page_count * 5); i++) {
+              if(all_files[i] != undefined){
+                f.push(all_files[i])
+              } else {
+                break;
+              }
+            }
+            $scope.files = f;
+            all_files.splice(0, i);
+            var info = info_count + " Notes"
             $rootScope.$broadcast('footer:info', info);
             break;
           case "All Files":
             var note = { type : "All Files" }
             FileService.setCurrentNote(note);
-            $scope.files = FileService.getAllFiles();
-            var info = $scope.files.length + " Files"
+            all_files = FileService.getAllFiles();
+            info_count = all_files.length;
+            var f = [];
+            var i = 0;
+            for (i = 0; i <= (page_count * 5); i++) {
+              if(all_files[i] != undefined){
+                f.push(all_files[i])
+              } else {
+                break;
+              }
+            }
+            $scope.files = f;
+            all_files.splice(0, i);
+            var info = all_files.length + " Files"
             $rootScope.$broadcast('footer:info', info);
             break;
           case "Notebooks":
@@ -46,13 +77,29 @@ angular.module('codexApp.index', [])
             $rootScope.$broadcast('footer:info', info);
             break;
         }
-      }, 1);
+        $location.hash('grid');
+        $anchorScroll();
+        loaded = true;
+        $scope.fader = "fade-in";
+      }, 25);
     }
 
     $scope.setView();
 
     $rootScope.$on('window-view:change', function(){
-      $scope.setView();
+      console.log("Changin view...");
+      current_page = 1;
+      loaded = false;
+      $scope.fader = "fade-out";
+
+      var state = FileService.getCurrentNote();
+      if(state.type == "All Notes" || state.type == "All Files" || state.type == "Folder"){
+        $scope.setView();
+      } else {
+        $timeout(function() {
+          $state.go($state.current, {}, {reload: true});
+        }, 200);
+      }
     });
 
     var remote = require('remote')
@@ -95,10 +142,10 @@ angular.module('codexApp.index', [])
     $rootScope.$on('file-service:files-loaded', function(){
       if(!$scope.$$phase) {
           $scope.$apply(function(){
-            $scope.itemSpacing();
+            //$scope.itemSpacing();
           });
         } else {
-            $scope.itemSpacing();
+            //$scope.itemSpacing();
         }
     })
 
@@ -177,6 +224,27 @@ angular.module('codexApp.index', [])
         };
       } }));
       menu.popup(currentWindow);
+    }
+
+    $scope.infiniteScroll = function() {
+      if(loaded == true){
+        if (FileService.getCurrentNote().type == "All Notes" || FileService.getCurrentNote().type == "All Files"){
+          if(all_files.length > 0 && $scope.files.length < info_count){
+              current_page = current_page + 1;
+              console.log("scrolling")
+              var i = 0;
+              for (i = 0; i <= page_count; i++) {
+                if(all_files[i] != undefined){
+                  $scope.files.push(all_files[i])
+                } else {
+                  break;
+                }
+
+              }
+              all_files.splice(0, i + 1);
+          }
+        }
+      }
     }
 
     var HTMLNodesToArray = function (reference, elems) {

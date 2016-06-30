@@ -19,6 +19,7 @@ angular
     'codexApp.noteView',
     'codexApp.noteEdit',
     'codexApp.imageView',
+    'infinite-scroll',
     'hljs'
   ])
 

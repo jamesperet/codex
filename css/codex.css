@@ -225,11 +225,20 @@ code.hljs .hljs-title {
 
 /* make keyframes that tell the start state and the end state of our object */
 @keyframes fadeIn { from {  opacity:0; ransform: scale(0.3); } to { opacity:1; transform: scale(1);} }
+@keyframes fadeOut { from {  opacity:100; ransform: scale(1); } to { opacity:0; transform: scale(0.3);} }
 
 .fade-in {
   opacity:0;  /* make things invisible upon start */
   transform: scale(0.3);
   animation: fadeIn ease-in 1;
+  animation-fill-mode:forwards;
+  animation-duration:0.2s;
+}
+
+.fade-out {
+  opacity: 100;
+  transform: scale(0.3);
+  animation: fadeOut ease-in 1;
   animation-fill-mode:forwards;
   animation-duration:0.2s;
 }

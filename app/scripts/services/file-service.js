@@ -17,6 +17,8 @@ angular.module('codexApp')
     var data = JSON.parse(raw_data);
     appData = data;
     notes_dir = appData.UserDataDirectory;
+    default_notes_dir = notes_dir + "/inbox";
+    default_home_note = notes_dir + "/index.md"
     return data
   }
 
@@ -33,7 +35,7 @@ angular.module('codexApp')
       // Generate file
       file_path = path + "/UserData.json";
       console.log("-> Generating user settings file: '" + file_path + "'");
-      var content = '{ "UserDataDirectory" : "' + defaultUserContentPath +'" }';
+      var content = '{ "UserDataDirectory" : "' + defaultUserContentPath +'", "thumbs" : [] }';
       mkdirSync(defaultUserContentPath);
       console.log(content);
       saveAppData(JSON.parse(content));
@@ -60,8 +62,8 @@ angular.module('codexApp')
   console.log("-> Loading content from folder: " + appData.UserDataDirectory);
 
 
-  var default_notes_dir = "/Users/james/dev/codex/codex/inbox";
-  var default_home_note = "/Users/james/dev/codex/codex/index.md"
+  var default_notes_dir = "/codex/inbox";
+  var default_home_note = "/codex/index.md"
   var notes = [];
   var current_note = "";
   var note_history = [];
