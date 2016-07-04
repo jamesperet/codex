@@ -12,9 +12,11 @@ angular.module('codexApp.index', [])
 
     var all_files = [];
     var current_page = 0;
-    var page_count = 5
+    var page_count = 2;
+    var page_count_start = 30;
     var info_count = 0;
     var loaded = false;
+    var view_changing = true;
     $scope.files = [];
 
     $scope.setView = function() {
@@ -29,7 +31,7 @@ angular.module('codexApp.index', [])
             info_count = all_files.length;
             var f = [];
             var i = 0;
-            for (i = 0; i <= (page_count * 5); i++) {
+            for (i = 0; i <= page_count_start; i++) {
               if(all_files[i] != undefined){
                 f.push(all_files[i])
               } else {
@@ -48,7 +50,7 @@ angular.module('codexApp.index', [])
             info_count = all_files.length;
             var f = [];
             var i = 0;
-            for (i = 0; i <= (page_count * 5); i++) {
+            for (i = 0; i <= page_count_start; i++) {
               if(all_files[i] != undefined){
                 f.push(all_files[i])
               } else {
@@ -77,28 +79,45 @@ angular.module('codexApp.index', [])
             $rootScope.$broadcast('footer:info', info);
             break;
         }
+        var last_view = FileService.getLastHistoryView();
+        if(last_view !== undefined){
+          if(last_view.title !== undefined){
+            $location.hash(last_view.title);
+            console.log("return list pointer to item " + last_view.title)
+          } else {
+            $location.hash('grid');
+          }
+        } else {
+          $location.hash('grid');
+        }
         $location.hash('grid');
         $anchorScroll();
-        loaded = true;
-        $scope.fader = "fade-in";
+        $timeout(function() {
+          $scope.fader = "fade-in";
+          loaded = true;
+          view_changing = false;
+        }, 250);
       }, 25);
     }
 
     $scope.setView();
 
     $rootScope.$on('window-view:change', function(){
-      console.log("Changin view...");
-      current_page = 1;
-      loaded = false;
-      $scope.fader = "fade-out";
+      if(view_changing == false){
+        view_changing = true
+        console.log("Changin view...");
+        current_page = 1;
+        loaded = false;
+        $scope.fader = "fade-out";
 
-      var state = FileService.getCurrentNote();
-      if(state.type == "All Notes" || state.type == "All Files" || state.type == "Folder"){
-        $scope.setView();
-      } else {
-        $timeout(function() {
-          $state.go($state.current, {}, {reload: true});
-        }, 200);
+        var state = FileService.getCurrentNote();
+        if(state.type == "All Notes" || state.type == "All Files" || state.type == "Folder"){
+          $scope.setView();
+        } else {
+          $timeout(function() {
+            $state.go($state.current, {}, {reload: true});
+          }, 200);
+        }
       }
     });
 
@@ -239,7 +258,6 @@ angular.module('codexApp.index', [])
                 } else {
                   break;
                 }
-
               }
               all_files.splice(0, i + 1);
           }

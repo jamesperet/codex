@@ -21,7 +21,7 @@
 
 <div class="file-view" style="height: 100%; overflow-y: scroll">
   <ul id="grid" infinite-scroll='infiniteScroll()' infinite-scroll-distance='4' infinite-scroll-immediate-check="false" infinite-scroll-parent="true">
-    <li ng-repeat="file in files track by $index" ng-dblclick="openFile(file)" class="file-view-item" ng-class="fader" isotope-item="{{file.path}}" style="display: block;">
+    <li id="{{file.title}}" ng-repeat="file in files track by $index" ng-dblclick="openFile(file)" class="file-view-item" ng-class="fader" isotope-item="{{file.path}}" style="display: block; opacity: 0;">
       <div class="thumbnail-icon" ng-show="file.type != 'Folder'" ng-right-click="fileContextMenu(file)">
         <img src="{{getImageURL(file.path)}}" ng-hide="isImage(file.type)">
         <img src="{{file.thumbnail}}" ng-show="isImage(file.type)">

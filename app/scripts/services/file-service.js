@@ -6,19 +6,24 @@ angular.module('codexApp')
   var appData = {};
   var notes_dir = "";
   var searched_files = [];
+  var recent_file_views = [];
 
   var getAppData = function(){
-    var remote = require('remote');
-    var app = remote.require('app');
-    appDataPath = app.getPath("userData");
-    defaultUserContentPath = app.getPath("home") + "/Documents/codex";
-    findOrGenerateUserDataFile(appDataPath, defaultUserContentPath);
-    var raw_data = fs.readFileSync(appDataPath + '/userData.json', 'utf8');
-    var data = JSON.parse(raw_data);
-    appData = data;
-    notes_dir = appData.UserDataDirectory;
-    default_notes_dir = notes_dir + "/inbox";
-    default_home_note = notes_dir + "/index.md"
+    if(notes_dir === ""){
+      var remote = require('remote');
+      var app = remote.require('app');
+      appDataPath = app.getPath("userData");
+      defaultUserContentPath = app.getPath("home") + "/Documents/codex";
+      findOrGenerateUserDataFile(appDataPath, defaultUserContentPath);
+      var raw_data = fs.readFileSync(appDataPath + '/userData.json', 'utf8');
+      var data = JSON.parse(raw_data);
+      appData = data;
+      notes_dir = appData.UserDataDirectory;
+      default_notes_dir = notes_dir + "/inbox";
+      default_home_note = notes_dir + "/index.md"
+    } else {
+      data = appData;
+    }
     return data
   }
 
@@ -216,40 +221,30 @@ angular.module('codexApp')
     return file_obj;
   }
 
-  var getNotesFromFolders = function(dir) {
-    if (typeof(dir)==='undefined') dir = notes_dir;
-    var filesystem = require("fs");
-    filesystem.readdirSync(dir).forEach(function(file) {
-
-        file_path = dir+'/'+file;
-        var stat = filesystem.statSync(file_path);
-        if (stat && stat.isDirectory()) {
-            notes = notes.concat(getNotesFromFolders(file_path))
-        } else {
-          if(file == "info.json"){
-            filesystem.readFile(file_path, function(err, data) {
-              var jsonData = JSON.parse(data);
-              var file_obj = SetFileInfo(jsonData, dir, file_path, stat)
-              notes.push(file_obj);
-            });
-          }
-        }
-    });
-    return notes;
-  };
-
-  this.getNotesFromFolders = getNotesFromFolders;
-
   var getAllFilesFromFolder = function(dir) {
     if (typeof(dir)==='undefined') dir = notes_dir;
+    console.log("Loading file list for " + dir)
+    var results = searchRecentFileViews(dir);
+    if(results === undefined){
+      results = listAllFilesFromFolder(dir)
+      var history = {"dir" : dir, "files" : results }
+      recent_file_views.push(history);
+      console.log("Saved " + history.files.length + " files...")
+    } else {
+      console.log("Loading " + results.length + " files...")
+    }
+    $rootScope.$broadcast('file-service:files-loaded');
+    return results;
+  };
+
+  var listAllFilesFromFolder = function(dir){
     var filesystem = require("fs");
     var results = [];
     filesystem.readdirSync(dir).forEach(function(file) {
-
         file_path = dir+'/'+file;
         var stat = filesystem.statSync(file_path);
         if (stat && stat.isDirectory()) {
-            results = results.concat(getAllFilesFromFolder(file_path))
+            results = results.concat(listAllFilesFromFolder(file_path))
         } else {
           if(isValidFile(file)) {
             var jsonData = {};
@@ -257,29 +252,19 @@ angular.module('codexApp')
             results.push(file_obj);
           }
         }
-
-        //console.log(file_obj);
     });
-    $rootScope.$broadcast('file-service:files-loaded');
     return results;
-  };
+  }
 
-  var getFilesFromFolder = function(dir) {
-    if (typeof(dir)==='undefined') dir = notes_dir;
-    var filesystem = require("fs");
-    var results = [];
-    filesystem.readdirSync(dir).forEach(function(file) {
-      file_path = dir+'/'+file;
-      var stat = filesystem.statSync(file_path);
-      if(isValidFile(file)) {
-        var jsonData = {};
-        var file_obj = SetFileInfo(jsonData, dir, file_path, stat)
-        results.push(file_obj);
+  var searchRecentFileViews = function(dir){
+    for (var i = 0; i < recent_file_views.length; i++) {
+      if(recent_file_views[i].dir == dir){
+        var files = extend([], recent_file_views[i].files);
+        return files
       }
-    });
-    $rootScope.$broadcast('file-service:files-loaded');
-    return results;
-  };
+    }
+  }
+
 
   var findNoteInFolder = function(note_id, dir) {
     if (typeof(dir)==='undefined') dir = notes_dir;
@@ -491,6 +476,18 @@ angular.module('codexApp')
     return true;
   }
 
+  extend = function(origin, add) {
+    // Don't do anything if add isn't an object
+    if (!add || typeof add !== 'object') return origin;
+
+    var keys = Object.keys(add);
+    var i = keys.length;
+    while (i--) {
+      origin[keys[i]] = add[keys[i]];
+    }
+    return origin;
+  };
+
 
 
   // RESPONSE
@@ -559,6 +556,10 @@ angular.module('codexApp')
       $rootScope.$broadcast('window-view:change');
       $rootScope.$broadcast('note-view:reload');
     }
+  }
+
+  this.getLastHistoryView = function(){
+    return note_history[note_history.length - 2]
   }
 
   this.setNotesDir = function(dir) {
