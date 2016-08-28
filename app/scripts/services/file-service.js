@@ -7,6 +7,12 @@ angular.module('codexApp')
   var notes_dir = "";
   var searched_files = [];
   var recent_file_views = [];
+  var default_notes_dir = "/codex/inbox";
+  var default_home_note = "/codex/index.md"
+  var notes = [];
+  var current_note = "";
+  var note_history = [];
+  var note_history_index = 0;
 
   var getAppData = function(){
     if(notes_dir === ""){
@@ -63,17 +69,6 @@ angular.module('codexApp')
     }
   }
 
-  getAppData();
-  console.log("-> Loading content from folder: " + appData.UserDataDirectory);
-
-
-  var default_notes_dir = "/codex/inbox";
-  var default_home_note = "/codex/index.md"
-  var notes = [];
-  var current_note = "";
-  var note_history = [];
-  var note_history_index = 0;
-
   var prettySize = function(bytes) {
     if (bytes <= 1024) {
       return bytes + " KB"
@@ -99,6 +94,10 @@ angular.module('codexApp')
       case "jpg":
         return "Image";
       case "png":
+        return "Image";
+      case "gif":
+        return "Image";
+      case "jpeg":
         return "Image";
       case "md":
         return "Markdown";
@@ -143,11 +142,13 @@ angular.module('codexApp')
   var getThumbnail = function(file_path) {
     var type = getFileType(file_path);
     var thumbs = appData.thumbs
+    //console.log("Thumbs data:")
+    //console.log(thumbs)
     switch (type) {
       case "Markdown":
         var thumb = ""
         for (var i=0; i < thumbs.length; i++) {
-          if (thumbs[i].file === file_path) {
+          if (thumbs[i].file == file_path) {
               thumb = thumbs[i].path;
               break;
           }
@@ -156,7 +157,7 @@ angular.module('codexApp')
           // [ ] Thumbnail generation queue
           // [ ] Default thumbnail
           console.log("> NO THUMBNAIL FOUND! GENERATING NEW ONE")
-          thumb = saveThumbnail(file_path);
+          //thumb = saveThumbnail(file_path);
         }
         return thumb
       default:
@@ -223,7 +224,7 @@ angular.module('codexApp')
 
   var getAllFilesFromFolder = function(dir) {
     if (typeof(dir)==='undefined') dir = notes_dir;
-    console.log("Loading file list for " + dir)
+    //console.log("Loading file list for " + dir)
     var results = searchRecentFileViews(dir);
     if(results === undefined){
       results = listAllFilesFromFolder(dir)
@@ -233,6 +234,22 @@ angular.module('codexApp')
     } else {
       console.log("Loading " + results.length + " files...")
     }
+    $rootScope.$broadcast('file-service:files-loaded');
+    return results;
+  };
+
+  var getFilesFromFolder = function(dir) {
+    //if (typeof(dir)==='undefined') dir = notes_dir;
+    // var results = searchRecentFileViews(dir);
+    // if(results === undefined){
+    //   results = listFilesFromFolder(dir)
+    //   var history = {"dir" : dir, "files" : results }
+    //   recent_file_views.push(history);
+    //   console.log("Saved " + history.files.length + " files...")
+    // } else {
+    //   console.log("Loading " + results.length + " files...")
+    // }
+    results = listFilesFromFolder(dir)
     $rootScope.$broadcast('file-service:files-loaded');
     return results;
   };
@@ -251,6 +268,21 @@ angular.module('codexApp')
             var file_obj = SetFileInfo(jsonData, dir, file_path, stat)
             results.push(file_obj);
           }
+        }
+    });
+    return results;
+  }
+
+  var listFilesFromFolder = function(dir){
+    var filesystem = require("fs");
+    var results = [];
+    filesystem.readdirSync(dir).forEach(function(file) {
+        file_path = dir+'/'+file;
+        var stat = filesystem.statSync(file_path);
+        if(isValidFile(file)) {
+          var jsonData = {};
+          var file_obj = SetFileInfo(jsonData, dir, file_path, stat)
+          results.push(file_obj);
         }
     });
     return results;
@@ -533,7 +565,7 @@ angular.module('codexApp')
     note_history.push(current_note);
     note_history_index = note_history.length -1;
 
-    console.log(current_note);
+    //console.log(current_note);
     //console.log("Current_note: " + current_note.title)
   }
 
@@ -592,6 +624,9 @@ angular.module('codexApp')
       case "Folder":
         $state.go("index");
         break;
+      case "Notebook":
+        $state.go("index");
+        break;
       case "Image":
         $state.go("image-view");
         break;
@@ -629,5 +664,8 @@ angular.module('codexApp')
   this.getSearchFiles = function() {
     return searched_files;
   }
+
+  getAppData();
+  console.log("-> Loading content from folder: " + appData.UserDataDirectory);
 
 }])

@@ -31,7 +31,6 @@ angular.module('codexApp.sidebar', [])
     }
 
     $scope.goToNotebooks = function() {
-      FileService.setCurrentNote(FileService.getNote(FileService.getNotesDir()));
       PrefsService.setCurrentView("Notebooks");
       $scope.activateSidebarBtn(2);
       $rootScope.$broadcast('main-window:file-list');

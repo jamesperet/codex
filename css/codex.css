@@ -72,6 +72,10 @@
   width: 1000px;
 }
 
+.note .width-fit {
+  width: 100%;
+}
+
 .note>h1:first-of-type {
   margin-top: 0px;
 }
@@ -139,11 +143,15 @@ a {
 
 pre code.hljs {
     display: block;
-    line-height: 2em;
+    line-height: 1.0em;
     border-radius: 5px;
     padding-left: 8px;
     padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
 }
+
 code.hljs {
     display: inline-flex;
     padding: 2px;
@@ -202,6 +210,7 @@ code.hljs .hljs-title {
 
 .icon-name {
   width: 220px;
+  overflow-wrap: break-word;
 }
 
 .notebook-icon-title {
@@ -249,4 +258,38 @@ code.hljs .hljs-title {
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
+}
+
+.column3 {
+  width: 30%;
+  margin-right: 3%;
+  float: left;
+}
+
+.column3 img {
+  width: 100%;
+}
+
+.clear-fix {
+  clear: both;
+}
+
+figure {
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+}
+
+blockquote {
+  padding: 5px 20px;
+  margin: 0 0 20px;
+  font-size: 17.5px;
+  border-left: 5px solid #eee;
+}
+
+blockquote p {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-style: italic;
 }

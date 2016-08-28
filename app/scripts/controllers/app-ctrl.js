@@ -16,7 +16,6 @@ angular.module('codexApp.index', [])
     var page_count_start = 30;
     var info_count = 0;
     var loaded = false;
-    var view_changing = true;
     $scope.files = [];
 
     $scope.setView = function() {
@@ -59,23 +58,62 @@ angular.module('codexApp.index', [])
             }
             $scope.files = f;
             all_files.splice(0, i);
-            var info = all_files.length + " Files"
+            var info = info_count + " Files"
             $rootScope.$broadcast('footer:info', info);
             break;
           case "Notebooks":
             $scope.current_folder = FileService.getNotesDir();
-            $scope.files = FileService.getFolders();
-            var info = $scope.files.length + " Notebooks"
+            var note = { type : "Notebooks" }
+            FileService.setCurrentNote(note);
+            all_files = FileService.getFolders();
+            info_count = all_files.length;
+            var f = [];
+            var i = 0;
+            for (i = 0; i <= page_count_start; i++) {
+              if(all_files[i] != undefined){
+                f.push(all_files[i])
+              } else {
+                break;
+              }
+            }
+            $scope.files = f;
+            all_files.splice(0, i);
+            var info = info_count + " Folders"
             $rootScope.$broadcast('footer:info', info);
             break;
           case "Notebook":
-            $scope.files = FileService.getFiles(FileService.getCurrentNote().path);
-            var info = $scope.files.length + " Items"
+            $scope.current_folder = FileService.getNotesDir();
+            all_files = FileService.getFiles(FileService.getCurrentNote().path);
+            info_count = all_files.length;
+            var f = [];
+            var i = 0;
+            for (i = 0; i <= page_count_start; i++) {
+              if(all_files[i] != undefined){
+                f.push(all_files[i])
+              } else {
+                break;
+              }
+            }
+            $scope.files = f;
+            all_files.splice(0, i);
+            var info = info_count + " Items"
             $rootScope.$broadcast('footer:info', info);
             break;
           case "Searched Files":
-            $scope.files = FileService.getSearchFiles();
-            var info = $scope.files.length + " Items"
+            all_files = FileService.getSearchFiles();
+            info_count = all_files.length;
+            var f = [];
+            var i = 0;
+            for (i = 0; i <= page_count_start; i++) {
+              if(all_files[i] != undefined){
+                f.push(all_files[i])
+              } else {
+                break;
+              }
+            }
+            $scope.files = f;
+            all_files.splice(0, i);
+            var info = info_count + " Items"
             $rootScope.$broadcast('footer:info', info);
             break;
         }
@@ -90,12 +128,11 @@ angular.module('codexApp.index', [])
         } else {
           $location.hash('grid');
         }
-        $location.hash('grid');
-        $anchorScroll();
         $timeout(function() {
+          console.log("Fading in new items")
           $scope.fader = "fade-in";
           loaded = true;
-          view_changing = false;
+          $anchorScroll();
         }, 250);
       }, 25);
     }
@@ -103,21 +140,13 @@ angular.module('codexApp.index', [])
     $scope.setView();
 
     $rootScope.$on('window-view:change', function(){
-      if(view_changing == false){
-        view_changing = true
-        console.log("Changin view...");
-        current_page = 1;
-        loaded = false;
-        $scope.fader = "fade-out";
-
-        var state = FileService.getCurrentNote();
-        if(state.type == "All Notes" || state.type == "All Files" || state.type == "Folder"){
-          $scope.setView();
-        } else {
-          $timeout(function() {
-            $state.go($state.current, {}, {reload: true});
-          }, 200);
-        }
+      current_page = 1;
+      loaded = false;
+      console.log("Changin view...");
+      $scope.fader = "fade-out";
+      var state = FileService.getCurrentNote();
+      if(state.type == "All Files" || state.type == "All Notes" || state.type == "Notebooks" || state.type == "Notebook" || state.type == "Searched Files"){
+        $scope.setView();
       }
     });
 
@@ -133,6 +162,7 @@ angular.module('codexApp.index', [])
           break;
         case "Folder":
           $scope.current_folder = file.path;
+          var file = { type : "Notebook", path : file.path }
           FileService.setCurrentNote(file)
           PrefsService.setCurrentView("Notebook");
           $scope.setView();
@@ -247,7 +277,8 @@ angular.module('codexApp.index', [])
 
     $scope.infiniteScroll = function() {
       if(loaded == true){
-        if (FileService.getCurrentNote().type == "All Notes" || FileService.getCurrentNote().type == "All Files"){
+        var note_type = FileService.getCurrentNote().type;
+        if (note_type == "All Notes" || note_type == "All Files" || note_type == "Notebooks" || note_type == "Notebook"){
           if(all_files.length > 0 && $scope.files.length < info_count){
               current_page = current_page + 1;
               console.log("scrolling")

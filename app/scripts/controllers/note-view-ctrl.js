@@ -32,6 +32,7 @@ angular.module('codexApp.noteView', [])
 
 
     $scope.loadNoteView = function() {
+      console.log($scope.note.path);
       filesystem.readFile($scope.note.path, function(err, data) {
 
         //$scope.note.data = String.fromCharCode.apply(null, data);
@@ -90,7 +91,10 @@ angular.module('codexApp.noteView', [])
     $rootScope.$on('note-view:reload', function() {
       $scope.note = FileService.getCurrentNote();
       $scope.html_data = "";
-      $scope.loadNoteView();
+      if($scope.note.path != undefined){
+        $scope.loadNoteView();
+      }
+
     });
 
     $scope.fixImgURLs = function(current_note_path, html){
